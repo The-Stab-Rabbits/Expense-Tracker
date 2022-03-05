@@ -15,7 +15,7 @@ app.use(express.json());
 app.get("/", controller.getExpense,  (req, res) => {
   return res.status(200).json(res.locals.expenses)
 })
- 
+
 // json({obj: res.locals.expenses}) 
 app.post("/", controller.postExpense, controller.getExpense, (req, res) => {
   return res.status(200).json(res.locals.expenses)
