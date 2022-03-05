@@ -5,16 +5,20 @@ const PORT = 3000;
 const bodyParser = require('body-parser');
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 /**
  * handle parsing request body
  */
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  return res.status(200).send('Hello World')
+    return res.status(200).send('Hello World!')
+})
+
+app.post("/api", (req, res) => {
+    return res.status(200).send("hi")
 })
 
 app.listen(PORT, () => {
-  console.log(`Server listening on port: ${PORT}`);
+    console.log(`Server listening on port: ${PORT}`);
 });
