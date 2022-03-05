@@ -1,5 +1,5 @@
 # groupscratchproject
-
+git remote 
 
     // "start": "webpack serve  --hot --open",
     // "build": "webpack --config webpack.config.js --mode production"
@@ -47,5 +47,30 @@ Controller
 
 Backend
     - setup sql database (what one?)
-    
+    /*
+ install pg
 
+
+Model
+    require pool pg
+    get uri from elephant
+    create new instance of pool using connection string
+    export pool
+
+Controller
+
+    setup controller
+
+
+
+[SQL QUERY]
+
+CREATE TABLE expense (
+  Vendor varchar(255),
+  Amount int,
+  Date date,
+  Category varchar(255)
+);
+
+INSERT INTO expense (Vendor, Amount, Date, Category)
+VALUES (YachtSales, 20000000, CURRENT_DATE, Luxury);
