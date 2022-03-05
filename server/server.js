@@ -15,8 +15,9 @@ app.get("/", (req, res) => {
     return res.status(200).send('Hello World!')
 })
 
-app.post("/api", (req, res) => {
-    return res.status(200).send("hi")
+app.post('/api/expenses', (req, res) => {
+    console.log(req.body)
+    return res.status(200).json(req.body)
 })
 
 app.listen(PORT, () => {
