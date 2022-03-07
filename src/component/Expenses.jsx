@@ -24,11 +24,11 @@ const Expenses = () => {
     }, [])
 
     // //upon rending, sets currentIndex to index of last entry of database
-    // useEffect(() => {
-    //     fetch('/api/index')
-    //         .then(response => response.json())
-    //         .then(data => setIndex(data))
-    // }, [])
+    useEffect(() => {
+        fetch('/api/index')
+            .then(response => response.json())
+            .then(data => setIndex(data))
+    }, [])
 
 
     //upon click, submits post requested, updated database with current extry.  Also updates current states with new information
@@ -49,8 +49,7 @@ const Expenses = () => {
         fetch('/api/expenses', postOptions)
             .then(response => response.json())
             .then(data => {
-                console.log("success")
-                // console.log(data.amount)
+
                 addBalance(data.amount)
                 return addItem(data)
             })
@@ -61,15 +60,23 @@ const Expenses = () => {
 
 
     function deleteClick(buttonIndex) {
-        const index = buttonIndex
+        const id = buttonIndex
         const deleteOptions = {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
         }
-        // fetch(`/api/${index}`, deleteOptions)
-        //     .then(response => response.json())
+        fetch(`/api/${id}`, deleteOptions)
+            .then(response => response.json())
+        fetch('/api/get')
+            .then(response => response.json())
+            .then(data => setState(data))
+        fetch('/api/getBalance')
+            .then(response => response.json())
+            .then(data => setBalance(data))
+        fetch('/api/index')
+            .then(response => response.json())
+            .then(data => setIndex(data))
 
-      
     }
     // adds new extry to current state
     function addItem(data) {
@@ -78,7 +85,7 @@ const Expenses = () => {
 
     // adds new expenses price to currentBalance state
     function addBalance(data) {
-        setBalance(currentBalance + Number(data))
+        setBalance(Number(currentBalance) + Number(data))
     }
     // increments index state by 1
     function incrementIndex() {
@@ -101,7 +108,7 @@ const Expenses = () => {
                 <li>Balance:
                     {currentBalance}
                 </li>
-                
+
                 {state.map((item, i) => (
                     <>
                         <ul>
@@ -109,7 +116,7 @@ const Expenses = () => {
                             <li>Vendor: {item.vendor} </li>
                             <li>Category: {item.category} </li>
                             <li>Date:{item.date} </li>
-                            <button id={item.index} onClick={deleteClick(item.index)}> Remove Expense</button>
+                            <button id={item.id} onClick={() => { deleteClick(item.id) }}> Remove Expense</button>
                         </ul>
                     </>
                 ))}

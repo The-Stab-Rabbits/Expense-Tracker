@@ -28,13 +28,16 @@ app.post("/api/expenses", controller.postExpense, (req, res) => {
 })
 
 // delete expense from database
-// app.delete("/api/expenses", controller.deleteExpense, (req, res) => {
-//   return res.status(200).json(res.locals.oldExpense)
-// })
+app.delete("/api/:id",controller.deleteExpense, (req, res) => {
+  // const id = req.params.id
+  // console.log(id)
+  return res.status(200).json(res.locals.oldExpense)
+})
+// 
 // // retrieve last index key in database
-// app.get("/api/index", controller.retrieveLastId, (req, res) => {
-//   return res.status(200).json(res.locals.index)
-// })
+app.get("/api/index", controller.retrieveLastId, (req, res) => {
+  return res.status(200).json(res.locals.index)
+})
 //catch-all route hanlder for any requests to an unknown route
 app.use((req, res) => res.status(404).send('This is not the page you\'re looking for...'));
 

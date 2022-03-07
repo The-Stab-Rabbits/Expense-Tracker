@@ -40,7 +40,8 @@ controller.getBalance = (req, res, next) => {
 }
 
 controller.postExpense = (req, res, next) => {
-  const { vendor, amount, category, id } = req.body
+  const { vendor, amount, category, id} = req.body
+
   // console.log(req.body);
   try {
     const text = `INSERT INTO expense VALUES( '${vendor}', ${amount}, '2017-12-20','${category}', '${id}');`
@@ -57,43 +58,45 @@ controller.postExpense = (req, res, next) => {
     });
   }
 }
-// controller.deleteExpense = (req, res, next) => {
-//   const { vendor, amount, category, date, id } = req.body
-//   console.log(req.body);
-//   try {
-//     const text = `DELETE FROM expense WHERE ${id}`;
-//     res.locals.oldExpense = req.body;
-//     db.query(text, (err, result) => {
-//       // console.log(result);
-//       return next();
-//     });
-//   }
-//   catch {
-//     return next({
-//       log: 'fatal error deleteing  expense in database inside controller.deleteExpense',
-//       status: 404
-//     });
-//   }
-// }
+controller.deleteExpense = (req, res, next) => {
+  // const { vendor, amount, category, date} = req.params;
+  const { id } = req.params;
+  console.log('req.params for delete', id);
+  try {
+    const text = `DELETE FROM expense WHERE id = ${id}`;
+    res.locals.oldExpense = req.params;
+    db.query(text, (err, result) => {
+      // console.log(result);
+      return next();
+    });
+  }
+  catch {
+    return next({
+      log: 'fatal error deleteing  expense in database inside controller.deleteExpense',
+      status: 404
+    });
+  }
+}
 
-// controller.retrieveLastId = (req, res, next) => {
-//   const { vendor, amount, category } = req.body
-//   console.log(req.body);
-//   try {
-//     const text = `SELECT id FROM expense ORDER BY id DESC LIMIT 1;`
-//     res.locals.index = result.rows[0].id;
-//     db.query(text, (err, result) => {
-//       // console.log(result);
-//       return next();
-//     });
-//   }
-//   catch {
-//     return next({
-//       log: 'fatal error retriving last index',
-//       status: 404
-//     });
-//   }
-// }
+controller.retrieveLastId = (req, res, next) => {
+  const { vendor, amount, category } = req.body
+  console.log(req.body);
+  try {
+    const text = `SELECT id FROM expense ORDER BY id DESC LIMIT 1`
+    // console.log('res.locals.index', res.locals.index)
+    db.query(text, (err, result) => {
+      res.locals.index = result.rows[0].id;
+      // console.log(result);
+      return next();
+    });
+  }
+  catch {
+    return next({
+      log: 'fatal error retriving last index',
+      status: 404
+    });
+  }
+}
 
 
 module.exports = controller;
