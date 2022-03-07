@@ -11,16 +11,30 @@ app.use(bodyParser.urlencoded({ extended: false }));
  * handle parsing request body
  */
 app.use(express.json());
-// Get all inputed expenses back
-app.get("/", controller.getExpense,  (req, res) => {
+
+// Get all inputed expenses back from database
+app.get('/api/get', controller.getExpense, (req, res) => {
   return res.status(200).json(res.locals.expenses)
 })
 
-// json({obj: res.locals.expenses}) 
-app.post("/", controller.postExpense, controller.getExpense, (req, res) => {
-  return res.status(200).json(res.locals.expenses)
+// Retrieve sum of all balances
+app.get("/api/getBalance", controller.getBalance, (req, res) => {
+  return res.status(200).json(res.locals.balance)
 })
 
+// Add new expense to database
+app.post("/api/expenses", controller.postExpense, (req, res) => {
+  return res.status(200).json(res.locals.newExpense)
+})
+
+// delete expense from database
+// app.delete("/api/expenses", controller.deleteExpense, (req, res) => {
+//   return res.status(200).json(res.locals.oldExpense)
+// })
+// // retrieve last index key in database
+// app.get("/api/index", controller.retrieveLastId, (req, res) => {
+//   return res.status(200).json(res.locals.index)
+// })
 //catch-all route hanlder for any requests to an unknown route
 app.use((req, res) => res.status(404).send('This is not the page you\'re looking for...'));
 
@@ -37,5 +51,13 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`Server listening on port: ${PORT}`);
+  console.log(`Server listening on port: ${PORT}`);
 });
+
+// TODO:
+/***
+ * index collumn to row
+ * new get request for index
+ *      retrieve last index in database
+ * 
+ */

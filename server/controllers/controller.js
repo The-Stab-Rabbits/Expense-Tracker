@@ -1,13 +1,10 @@
-
 const { Pool } = require('pg');
 const db = require('../model/model')
+const controller = {};
 
-const controller = {}; 
-
-controller.getExpense = (req,res,next) => {
+controller.getExpense = (req, res, next) => {
   const text = `SELECT * FROM expense;`;
-  
-  try{
+  try {
     db.query(text, (err, result) => {
       // console.log(result.rows)
       res.locals.expenses = result.rows;
@@ -15,23 +12,39 @@ controller.getExpense = (req,res,next) => {
       return next();
     });
   }
-  catch{
+  catch {
     return next({
       log: 'fatal error retrieving expenses from database inside controller.getExpense',
       status: 404
     });
   }
+}
 
-  
-} // error handler here ?
+controller.getBalance = (req, res, next) => {
+  const text = `SELECT SUM(amount) FROM expense`;
+  try {
+    db.query(text, (err, result) => {
+      // console.log(result.rows)
+      // console.log(result.rows[0].sum)
+      res.locals.balance = result.rows[0].sum;
+      // console.log(res.locals.expenses);
+      return next();
+    });
+  }
+  catch {
+    return next({
+      log: 'fatal error retrieving balance from database',
+      status: 404
+    });
+  }
+}
 
-
-
-controller.postExpense = (req,res,next) => {
-  const { vendor, amount, category} = req.body
-  console.log(req.body);
-  try{
-    const text = `INSERT INTO expense VALUES( '${vendor}', ${amount}, '2020-12-20','${category}');`
+controller.postExpense = (req, res, next) => {
+  const { vendor, amount, category, id } = req.body
+  // console.log(req.body);
+  try {
+    const text = `INSERT INTO expense VALUES( '${vendor}', ${amount}, '2017-12-20','${category}', '${id}');`
+    res.locals.newExpense = req.body;
     db.query(text, (err, result) => {
       // console.log(result);
       return next();
@@ -44,6 +57,49 @@ controller.postExpense = (req,res,next) => {
     });
   }
 }
+// controller.deleteExpense = (req, res, next) => {
+//   const { vendor, amount, category, date, id } = req.body
+//   console.log(req.body);
+//   try {
+//     const text = `DELETE FROM expense WHERE ${id}`;
+//     res.locals.oldExpense = req.body;
+//     db.query(text, (err, result) => {
+//       // console.log(result);
+//       return next();
+//     });
+//   }
+//   catch {
+//     return next({
+//       log: 'fatal error deleteing  expense in database inside controller.deleteExpense',
+//       status: 404
+//     });
+//   }
+// }
+
+// controller.retrieveLastId = (req, res, next) => {
+//   const { vendor, amount, category } = req.body
+//   console.log(req.body);
+//   try {
+//     const text = `SELECT id FROM expense ORDER BY id DESC LIMIT 1;`
+//     res.locals.index = result.rows[0].id;
+//     db.query(text, (err, result) => {
+//       // console.log(result);
+//       return next();
+//     });
+//   }
+//   catch {
+//     return next({
+//       log: 'fatal error retriving last index',
+//       status: 404
+//     });
+//   }
+// }
+
+
+module.exports = controller;
+
+
+
 // INSERT INTO table_name(column1, column2, …)
 // VALUES (value1, value2, …);
 
@@ -52,41 +108,6 @@ controller.postExpense = (req,res,next) => {
 //     Amount int,
 //     Date date,
 //     Category varchar(255),
+//     id int  
 // );
 
-
-module.exports = controller;
-
-
-
-
-/** 
-
-const text = `SELECT result1.*, agg.titles as films, agg.film_id FROM result1 LEFT JOIN agg ON result1._id = agg._id limit 1;` 
-db.query(text, (err, result) => {
-    try { 
-    res.locals.characters = result.rows;
-    
-    for (let i = 0; i < res.locals.characters.length; i++){
-      // console.log('hi')
-      
-      //  converting film and film_id long string to arrays
-      const film_id = res.locals.characters[i]['film_id'] = res.locals.characters[i]['film_id'].split(',');
-      const film = res.locals.characters[i]['films'] = res.locals.characters[i]['films'].split(',');
-
-      //iterating film and film_id arrays and create film objects
-      console.log(film.length);
-      for (let j = 0; j < film.length; j++){
-        console.log('bye');
-        film[j] = { title: film[j], id: film_id[j]};
-      }
-      //res.locals.characters[i]['films']
-    }
-    console.log(res.locals.characters);
-    next();
-    }catch(err){ 
-    console.log('we got an error')
-    }
-  })
-
-*/

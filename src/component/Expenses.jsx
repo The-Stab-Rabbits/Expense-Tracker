@@ -1,19 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-// Submit button for our expense
-
-
-
-//state:
-// price : []
 //Expenses Component
 const Expenses = () => {
-    const [price, setPrice] = useState([]);
-    // const [vendor, setVendor] = useState(0);
-    // const [category, setCat] = useState(0);
-    // const [date, setDate] = useState(0);
+    //created state to hold database
+    const [state, setState] = useState([]);
+    //created state to hold net price of expense extries
+    const [currentBalance, setBalance] = useState(0);
+    // created state to hold index of database extries
+    const [currentIndex, setIndex] = useState(0)
 
+    // upon rendering, sets state to current database 
+    useEffect(() => {
+        fetch('/api/get')
+            .then(response => response.json())
+            .then(data => setState(data))
+    }, [])
+
+    // //upon rending, sets currentBalance state to current database net price
+    useEffect(() => {
+        fetch('/api/getBalance')
+            .then(response => response.json())
+            .then(data => setBalance(data))
+    }, [])
+
+    // //upon rending, sets currentIndex to index of last entry of database
+    // useEffect(() => {
+    //     fetch('/api/index')
+    //         .then(response => response.json())
+    //         .then(data => setIndex(data))
+    // }, [])
+
+
+    //upon click, submits post requested, updated database with current extry.  Also updates current states with new information
     function submitClick() {
+        console.log(state)
+        const index = currentIndex
+        incrementIndex()
         const vendor = document.getElementById('Vendor').value
         const amount = document.getElementById('Amount').value
         const category = document.getElementById('Category').value
@@ -22,23 +44,45 @@ const Expenses = () => {
         const postOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ amount: amount, vendor: vendor, category: category, date: date })
+            body: JSON.stringify({ id: index, amount: amount, vendor: vendor, category: category, date: date })
         }
         fetch('/api/expenses', postOptions)
             .then(response => response.json())
             .then(data => {
                 console.log("success")
-                return setPrice(data)
+                // console.log(data.amount)
+                addBalance(data.amount)
+                return addItem(data)
             })
             .catch((error) => {
                 console.error('Error:', error);
             });
+    }
 
 
-        // setPrice = data => {
-        //     (price.concat(data))
-        // }
-        setPrice(data => price.concat(data))
+    function deleteClick(buttonIndex) {
+        const index = buttonIndex
+        const deleteOptions = {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+        }
+        // fetch(`/api/${index}`, deleteOptions)
+        //     .then(response => response.json())
+
+      
+    }
+    // adds new extry to current state
+    function addItem(data) {
+        setState(state.concat(data))
+    }
+
+    // adds new expenses price to currentBalance state
+    function addBalance(data) {
+        setBalance(currentBalance + Number(data))
+    }
+    // increments index state by 1
+    function incrementIndex() {
+        setIndex(currentIndex + 1)
     }
 
     return (
@@ -52,17 +96,23 @@ const Expenses = () => {
                 <button onClick={submitClick}> Submit</button>
             </div>
             <div>
-                <h1>Testing</h1>
-                <ul>
-                    {/* {price.map((item) => ( */}
+                <h1>Balance</h1>
+                <h2>{currentIndex}</h2>
+                <li>Balance:
+                    {currentBalance}
+                </li>
+                
+                {state.map((item, i) => (
                     <>
-                        <li>Price: {price.amount}</li>
-                        <li>Vendor: {price.vendor} </li>
-                        <li>Category: {price.category} </li>
-                        <li>Date:{price.date} </li>
+                        <ul>
+                            <li>Price: {item.amount}</li>
+                            <li>Vendor: {item.vendor} </li>
+                            <li>Category: {item.category} </li>
+                            <li>Date:{item.date} </li>
+                            <button id={item.index} onClick={deleteClick(item.index)}> Remove Expense</button>
+                        </ul>
                     </>
-                    {/* ))} */}
-                </ul>
+                ))}
             </div>
         </>
     );
