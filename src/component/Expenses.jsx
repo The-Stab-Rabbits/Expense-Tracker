@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 //Expenses Component
 const Expenses = () => {
   //created state to hold database
-  const [state, setState] = useState([]);
+  const [database, setDatabase] = useState([]);
   //created state to hold net price of expense extries
   const [currentBalance, setBalance] = useState(0);
   // created state to hold index of database extries
@@ -13,7 +13,7 @@ const Expenses = () => {
   useEffect(() => {
     fetch("/api/get")
       .then((response) => response.json())
-      .then((data) => setState(data));
+      .then((data) => setDatabase(data));
   }, []);
 
   // //upon rending, sets currentBalance state to current database net price
@@ -32,7 +32,6 @@ const Expenses = () => {
 
   //upon click, submits post requested, updated database with current extry.  Also updates current states with new information
   function submitClick() {
-    console.log(state);
     const index = currentIndex;
     incrementIndex();
     const vendor = document.getElementById("Vendor").value;
@@ -63,25 +62,29 @@ const Expenses = () => {
   }
 
   function deleteClick(buttonIndex) {
+    console.log("button index", buttonIndex);
     const id = buttonIndex;
     const deleteOptions = {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
     };
-    fetch(`/api/${id}`, deleteOptions).then((response) => response.json());
-    fetch("/api/get")
+    fetch(`/api/${id}`, deleteOptions)
       .then((response) => response.json())
-      .then((data) => setState(data));
-    fetch("/api/getBalance")
-      .then((response) => response.json())
-      .then((data) => setBalance(data));
-    // fetch("/api/index")
-    //   .then((response) => response.json())
-    //   .then((data) => setIndex(data));
+      .then((response) => {
+        fetch("/api/get")
+          .then((response) => response.json())
+          .then((data) => setDatabase(data));
+        fetch("/api/getBalance")
+          .then((response) => response.json())
+          .then((data) => setBalance(data));
+        fetch("/api/index")
+          .then((response) => response.json())
+          .then((data) => setIndex(data));
+      });
   }
   // adds new extry to current state
   function addItem(data) {
-    setState(state.concat(data));
+    setDatabase(database.concat(data));
   }
 
   // adds new expenses price to currentBalance state
@@ -109,14 +112,14 @@ const Expenses = () => {
         <button onClick={submitClick}> Submit</button>
       </div>
       <div>
-        <h1>Balance</h1>
+        <h1>Index</h1>
         <h2>{currentIndex}</h2>
         <li>
           Balance:
           {currentBalance}
         </li>
 
-        {state.map((item, i) => (
+        {database.map((item, i) => (
           <>
             <ul>
               <li>Price: {item.amount}</li>
@@ -130,7 +133,7 @@ const Expenses = () => {
                 }}
               >
                 {" "}
-                Remove Expense
+                Remove Expense {item.id}
               </button>
             </ul>
           </>

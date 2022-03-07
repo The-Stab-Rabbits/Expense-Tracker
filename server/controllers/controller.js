@@ -38,11 +38,11 @@ controller.getBalance = (req, res, next) => {
 };
 
 controller.postExpense = (req, res, next) => {
-  const { vendor, amount, category, id } = req.body;
+  const { vendor, amount, category, id, date } = req.body;
 
   // console.log(req.body);
   try {
-    const text = `INSERT INTO expense VALUES( '${vendor}', ${amount}, '2017-12-20','${category}', '${id}');`;
+    const text = `INSERT INTO expense VALUES( '${vendor}', ${amount}, '${date}','${category}', '${id}');`;
     res.locals.newExpense = req.body;
     db.query(text, (err, result) => {
       // console.log(result);
@@ -81,7 +81,11 @@ controller.retrieveLastId = (req, res, next) => {
     const text = `SELECT id FROM expense ORDER BY id DESC LIMIT 1`;
     // console.log('res.locals.index', res.locals.index)
     db.query(text, (err, result) => {
-      res.locals.index = result.rows[0].id;
+      if (!result.rows[0].id) {
+        res.locals.index = 0;
+      } else {
+        res.locals.index = result.rows[0].id;
+      }
       // console.log(result);
       return next();
     });
