@@ -101,9 +101,18 @@ const Expenses = () => {
     <>
       <header>
         <img src={Pink} alt="Logo" />
+        <h1>©</h1>
         {/* {<img src="../image/PinkA.jpg" alt="Pinky" className="logo" />} */}
-        <h1>Team Pink Fairy Armadillo</h1>
+        <div className="name">
+          <h1>Team Pink Fairy Armadillo</h1>
+        </div>
+        <div className="innerHead"></div>
       </header>
+      <div className="founders">
+        <h3>
+          Founders: Dane Corpion, Jonathan Oh, Daljit Gill, and Kris Sorensen ©
+        </h3>
+      </div>
       <div className="main">
         <div className="innerMain">
           <div className="container">
