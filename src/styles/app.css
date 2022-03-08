@@ -1,0 +1,131 @@
+@import url("https://fonts.googleapis.com/css2?family=Cabin&family=Oswald&family=Roboto&display=swap");
+html {
+  font-family: "Roboto", sans-serif;
+}
+
+body {
+  background-color: lightgray;
+  margin: 0;
+}
+header {
+  background-color: #18181a;
+  width: 100vw;
+  height: 75px;
+  display: flex;
+  border: none;
+  padding-right: 40px;
+  padding-left: 40px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin-bottom: 40px;
+}
+img {
+  margin-right: 20px;
+}
+
+h1,
+h2,
+h3 p {
+  color: #f98798;
+  text-shadow: -0.5px 0 black, 0 0.5px black, 0.5px 0 black, 0 -0.5px black;
+}
+ul {
+  background-color: rgb(218, 218, 218);
+  list-style-type: none;
+  border: 1px solid rgb(0, 0, 0, 0.3);
+  box-shadow: 10px 10px 8px #bbb;
+  border-radius: 25px;
+  padding: 20px;
+}
+
+.addExpense {
+  display: flex;
+  flex-direction: column;
+}
+.main {
+  display: flex;
+  justify-content: center;
+}
+
+.cards {
+  display: flex;
+  /* justify-content: center; */
+  flex-wrap: wrap;
+  width: 800px;
+}
+
+.innerCard {
+  margin: 10px;
+}
+
+.balance {
+  display: flex;
+  justify-content: center;
+}
+
+h1 {
+}
+li {
+  margin: 15px;
+  font-weight: bold;
+  font-family: "Roboto", sans-serif;
+}
+
+input {
+  background-color: rgb(254, 228, 232);
+  margin: 5px;
+  padding: 5px;
+  border: none;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+.submit {
+  background-color: #335075;
+  border: none;
+  color: white;
+  padding: 15px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  width: 200px;
+  border-radius: 15px;
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+.btnContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.inner-container {
+  background-color: #222;
+}
+
+.remove {
+  background-color: #335075;
+  border: none;
+  color: white;
+  padding: 15px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 15px;
+  margin-top: 20px;
+}
+
+button:hover {
+  background-color: grey;
+}
+.box {
+  /* border: 1px solid black;
+  background-color: black; */
+}
+
+span {
+  font-size: 20px;
+  margin-right: 5px;
+}

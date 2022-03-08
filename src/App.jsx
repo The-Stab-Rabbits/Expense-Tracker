@@ -1,13 +1,12 @@
 import React from "react";
-import Expenses from './component/Expenses'
+import Expenses from "./component/Expenses";
 
 const App = () => {
-    return(
+  return (
     <div>
-        <h1>Hello Pink Fairies</h1>
-        <Expenses/>
+      <Expenses />
     </div>
-    )
+  );
 };
 
 export default App;

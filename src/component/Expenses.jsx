@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-
+import "../styles/app.css";
+import Pink from "../image/PinkA.jpg";
 //Expenses Component
 const Expenses = () => {
   //created state to hold database
@@ -7,7 +8,7 @@ const Expenses = () => {
   //created state to hold net price of expense extries
   const [currentBalance, setBalance] = useState(0);
   // created state to hold index of database extries
-  const [currentIndex, setIndex] = useState(0);
+  const [currentIndex, setIndex] = useState(1);
 
   // upon rendering, sets state to current database
   useEffect(() => {
@@ -27,7 +28,7 @@ const Expenses = () => {
   useEffect(() => {
     fetch("/api/index")
       .then((response) => response.json())
-      .then((data) => setIndex(data));
+      .then((data) => setIndex(data + 1));
   }, []);
 
   //upon click, submits post requested, updated database with current extry.  Also updates current states with new information
@@ -38,7 +39,7 @@ const Expenses = () => {
     const amount = document.getElementById("Amount").value;
     const category = document.getElementById("Category").value;
     const date = document.getElementById("Date").value;
-
+    console.log(date);
     const postOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -91,53 +92,82 @@ const Expenses = () => {
   function addBalance(data) {
     setBalance(Number(currentBalance) + Number(data));
   }
-  // increments index state by 1
+  // increments index state by 1.  // for whoever is working on this, we are having issues with the index state when you are add and delete buttons on the front end.  sometimes the index state does not match the database id
   function incrementIndex() {
     setIndex(currentIndex + 1);
   }
 
   return (
     <>
-      <div>
-        <h1>Hello Expenses Component</h1>
-        <input
-          type="amount"
-          name="Amount"
-          id="Amount"
-          placeholder="Enter Cost"
-        ></input>
-        <input type="vendor" id="Vendor" placeholder="Vendor"></input>
-        <input type="category" id="Category" placeholder="Category"></input>
-        <input type="date" id="Date"></input>
-        <button onClick={submitClick}> Submit</button>
-      </div>
-      <div>
-        <h1>Index</h1>
-        <h2>{currentIndex}</h2>
-        <li>
-          Balance:
-          {currentBalance}
-        </li>
-
-        {database.map((item, i) => (
-          <>
-            <ul>
-              <li>Price: {item.amount}</li>
-              <li>Vendor: {item.vendor} </li>
-              <li>Category: {item.category} </li>
-              <li>Date:{item.date} </li>
-              <button
-                id={item.id}
-                onClick={() => {
-                  deleteClick(item.id);
-                }}
-              >
-                {" "}
-                Remove Expense {item.id}
-              </button>
-            </ul>
-          </>
-        ))}
+      <header>
+        <img src={Pink} alt="Logo" />
+        {/* {<img src="../image/PinkA.jpg" alt="Pinky" className="logo" />} */}
+        <h1>Team Pink Fairy Armadillo</h1>
+      </header>
+      <div className="main">
+        <div className="innerMain">
+          <div className="container">
+            <div className="box">
+              <h1>Expenses</h1>
+            </div>
+            <div className="addExpense">
+              <input
+                type="amount"
+                name="Amount"
+                id="Amount"
+                placeholder="Enter Cost"
+              ></input>
+              <input type="vendor" id="Vendor" placeholder="Vendor"></input>
+              <input
+                type="category"
+                id="Category"
+                placeholder="Category"
+              ></input>
+              <input type="date" id="Date"></input>
+              <div className="btnContainer">
+                <button className="submit" onClick={submitClick}>
+                  {" "}
+                  Submit
+                </button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div className="balance">
+              <h2>Balance: $ {currentBalance}</h2>
+            </div>
+            <div className="cards">
+              {database.map((item, i) => (
+                <div className="innerCard">
+                  <ul>
+                    <li>
+                      <span>Price: </span>${item.amount}
+                    </li>
+                    <li>
+                      <span>Vendor: </span> {item.vendor}{" "}
+                    </li>
+                    <li>
+                      <span>Category: </span> {item.category}{" "}
+                    </li>
+                    <li>
+                      <span>Date: </span> {item.date}{" "}
+                    </li>
+                    <button
+                      id={item.id}
+                      className="remove"
+                      onClick={() => {
+                        deleteClick(item.id);
+                      }}
+                    >
+                      {" "}
+                      Remove Expense
+                    </button>
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );

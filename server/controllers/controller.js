@@ -3,9 +3,10 @@ const db = require("../model/model");
 const controller = {};
 
 controller.getExpense = (req, res, next) => {
-  const text = `SELECT * FROM expense;`;
+  const text = `SELECT * FROM expense1;`;
   try {
     db.query(text, (err, result) => {
+      r;
       // console.log(result.rows)
       res.locals.expenses = result.rows;
       // console.log(res.locals.expenses);
@@ -20,7 +21,7 @@ controller.getExpense = (req, res, next) => {
 };
 
 controller.getBalance = (req, res, next) => {
-  const text = `SELECT SUM(amount) FROM expense`;
+  const text = `SELECT SUM(amount) FROM expense1`;
   try {
     db.query(text, (err, result) => {
       // console.log(result.rows)
@@ -38,11 +39,11 @@ controller.getBalance = (req, res, next) => {
 };
 
 controller.postExpense = (req, res, next) => {
-  const { vendor, amount, category, id, date } = req.body;
+  const { vendor, amount, category, id } = req.body;
 
   // console.log(req.body);
   try {
-    const text = `INSERT INTO expense VALUES( '${vendor}', ${amount}, '${date}','${category}', '${id}');`;
+    const text = `INSERT INTO expense1 VALUES( '${vendor}', ${amount}, '2017-12-20','${category}', '${id}');`;
     res.locals.newExpense = req.body;
     db.query(text, (err, result) => {
       // console.log(result);
@@ -60,7 +61,7 @@ controller.deleteExpense = (req, res, next) => {
   const { id } = req.params;
   console.log("req.params for delete", id);
   try {
-    const text = `DELETE FROM expense WHERE id = ${id}`;
+    const text = `DELETE FROM expense1 WHERE id = ${id}`;
     res.locals.oldExpense = req.params;
     db.query(text, (err, result) => {
       // console.log(result);
@@ -78,7 +79,7 @@ controller.retrieveLastId = (req, res, next) => {
   const { vendor, amount, category } = req.body;
   console.log(req.body);
   try {
-    const text = `SELECT id FROM expense ORDER BY id DESC LIMIT 1`;
+    const text = `SELECT id FROM expense1 ORDER BY id DESC LIMIT 1`;
     // console.log('res.locals.index', res.locals.index)
     db.query(text, (err, result) => {
       if (!result.rows[0].id) {
@@ -109,3 +110,4 @@ module.exports = controller;
 //     Category varchar(255),
 //     id int
 // );
+// INSERT INTO expense1 VALUES ('Walmart', 12, '2022-1-10', 'Shampoo', 0);
