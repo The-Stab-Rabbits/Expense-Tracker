@@ -23,6 +23,7 @@ controller.getBalance = async (req, res, next) => {
   try {
     const result = await db.query(text);
     res.locals.balance = result.rows[0].sum;
+    console.log('res.locals.balance', res.locals.balance);
     return next();
 
   } catch (err) {

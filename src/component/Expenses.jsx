@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from "react";
 import "../styles/app.css";
 import Pink from "../image/PinkA.jpg";
+import MainDash from "./MainDash";
+import MonthlyDash from "./MonthlyDash";
+import Sidebar from "./Sidebar";
+import { DataContext } from "./DataContext";
+
 //Expenses Component
 const Expenses = () => {
-
   //created state to hold database
   const [database, setDatabase] = useState([]);
   //created state to hold net price of expense extries
   const [currentBalance, setBalance] = useState(0);
+  const [month, setMonth] = useState('00');
+  const [monthDatabase, setMonthDatabase] = useState(null)
   // created state to hold index of database extries
   // const [currentIndex, setIndex] = useState(1);
   // upon rendering, sets state to current database
@@ -49,15 +55,17 @@ const Expenses = () => {
     fetch("/api/expenses", postOptions)
       .then((response) => response.json())
       .then(response => {
-        console.log('response', response)
         setDatabase([...database, ...response])
       })
+      .then(() => fetch('/api/getBalance'))
+      .then((response) => response.json())
+      .then((response)=> setBalance(response))
 
-    }
+  
 
-  function deleteClick(buttonIndex) {
-    console.log("button index", buttonIndex);
-    const id = buttonIndex;
+  }
+
+  function deleteClick(id) {
     const deleteOptions = {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
@@ -67,97 +75,70 @@ const Expenses = () => {
       .then(() => console.log("Delete Successful"))
       .then(() => {
         setDatabase(database.filter(x => x.id !== id))
-      });
-  }
-  // adds new extry to current state
-  function addItem(data) {
-    setDatabase(database.concat(data));
+      })
+      .then(() => fetch('/api/getBalance'))
+      .then((response) => response.json())
+      .then((response)=> setBalance(response))
+    
+    // const balance = await fetch('/api/getBalance')
+    // .then((response) => response.json())
+    // .then((data) => setBalance(data));
   }
 
-  // adds new expenses price to currentBalance state
-  function addBalance(data) {
-    setBalance(Number(currentBalance) + Number(data));
+  function activeMonth(monthNum) {
+    setMonth(monthNum);
+    console.log('currMonth', month)
+    // fetch(`/api/month/${monthNum}`)
+    // .then((response=> response.json()))
+    // .then((data) => setMonthDatabase(data))
   }
-  // increments index state by 1.  // for whoever is working on this, we are having issues with the index state when you are add and delete buttons on the front end.  sometimes the index state does not match the database id
 
   return (
     <>
+
       <header>
         <img src={Pink} alt="Logo" />
         <h1>©</h1>
-        {/* {<img src="../image/PinkA.jpg" alt="Pinky" className="logo" />} */}
         <div className="name">
-          <h1>Team Pink Fairy Armadillo</h1>
+          <h1>Stab Rabbits</h1>
         </div>
-        <div className="innerHead"></div>
       </header>
-      <div className="founders">
-        <h3>
-          Founders: Dane Corpion, Jonathan Oh, Daljit Gill, and Kris Sorensen ©
-        </h3>
-      </div>
+
+
       <div className="main">
         <div className="innerMain">
+
+
           <div className="container">
-            <div className="box">
-              <h1>Expenses</h1>
-            </div>
+            <h1>Expenses</h1>
             <div className="addExpense">
-              <input
-                type="amount"
-                name="Amount"
-                id="Amount"
-                placeholder="Enter Cost"
-              ></input>
-              <input type="vendor" id="Vendor" placeholder="Vendor"></input>
-              <input
-                type="category"
-                id="Category"
-                placeholder="Category"
-              ></input>
-              <input type="date" id="Date"></input>
+              
+              <input id="Amount" placeholder="Enter Cost"></input>
+
+              <input id="Vendor" placeholder="Vendor"></input>
+
+              <input id="Category" placeholder="Category"></input>
+              
+              <input type= 'date' id="Date"></input>
+
               <div className="btnContainer">
                 <button className="submit" onClick={submitClick}>
-                  {" "}
                   Submit
                 </button>
               </div>
+
             </div>
           </div>
-          <div>
-            <div className="balance">
-              <h2>Balance: $ {currentBalance}</h2>
-            </div>
-            <div className="cards">
-              {database.map((item, i) => (
-                <div className="innerCard">
-                  <ul>
-                    <li>
-                      <span>Price: </span>${item.amount}
-                    </li>
-                    <li>
-                      <span>Vendor: </span> {item.vendor}{" "}
-                    </li>
-                    <li>
-                      <span>Category: </span> {item.category}{" "}
-                    </li>
-                    <li>
-                      <span>Date: </span> {item.date}{" "}
-                    </li>
-                    <button
-                      id={item.id}
-                      className="remove"
-                      onClick={() => {
-                        deleteClick(item.id);
-                      }}
-                    >
-                      Remove Expense {item.id}
-                    </button>
-                  </ul>
-                </div>
-              ))}
-            </div>
+
+          
+          <div className='dashboard'>
+            <DataContext.Provider value={{ database, setDatabase, currentBalance, setBalance, month, setMonth, monthDatabase, setMonthDatabase, deleteClick, submitClick, activeMonth}}>
+              <Sidebar/>
+              {month === '00' ? <MainDash/> : <MonthlyDash />}
+
+            </DataContext.Provider>
           </div>
+
         </div>
       </div>
     </>
