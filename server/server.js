@@ -22,13 +22,16 @@ app.get("/api/getBalance", controller.getBalance, (req, res) => {
   return res.status(200).json(res.locals.balance)
 })
 
+app.get("/api/month/:month", controller.getMonths, (req, res) => {
+  return res.status(200).json(res.locals);
+})
 // Add new expense to database
 app.post("/api/expenses", controller.postExpense, (req, res) => {
   return res.status(200).json(res.locals.postexpense);
 })
 
 // delete expense from database
-app.delete("/api/:id",controller.deleteExpense, (req, res) => {
+app.delete("/api/:id", controller.deleteExpense, (req, res) => {
   return res.status(200).json('Delete Successful')
 })
 // 

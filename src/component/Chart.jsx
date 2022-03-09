@@ -55,71 +55,37 @@ ChartJS.register(
   SubTitle
 );
 
-class Chart extends React.Component {
-  constructor(props){
-    super(props)
-    this.state = {
-      labels: [],
-      datasets: [
+// class Chart extends React.Component {
+const Chart = props => {
+  // constructor(props){
+  //   super(props)
+  //   this.state = {
+    const datasets = {
+        labels : ['January', 'February', 'March', 'April', 'May'],
+    //   labels: {this.props.labels}
+        datasets: [
         {
           label: 'Rainfall',
           backgroundColor: [
-              'rgba(75,192,0,1)',
-              'rgba(55,192,192,1)',
-              'rgba(100,192,192,1)',
-              'rgba(75,192,192,1)',
-              'rgba(66,192,192,1)',
-              'rgba(66,0,192,1)',
-              'rgba(66,192,192,1)'
+            'rgb(255, 99, 132)',
+            'rgb(54, 162, 235)',
+            'rgb(255, 205, 86)',
+            'rgba(22,44,15,1)',
+            'rgba(66,192,192,1)',
+            'rgba(66,0,192,1)',
+            'rgba(66,192,192,1)',
           ],
           borderColor: 'rgba(0,0,0,1)',
           borderWidth: 2,
           data: [65, 100, 80, 81, 56]
+        //   data: {this.props.values}
         }
-      ]
-    }
- }
-
- componentDidMount(){
-    let chartData = this.dataHolding.setData();
-       categories = Object.keys(chartData)
-       amounts = Object.values(chartData)
-       this.setState({
-        labels: categories,
-       })
-       this.setState({
-        datasets[data](amounts)
-       })
-    })
-  .catch(err => console.log(err))
- //  this.setState({
- //   labels: ['January', 'February', 'March',
- //          'April', 'May'],
- //   datasets: [
- //     {
- //       label: 'Rainfall',
- //       backgroundColor: 'rgba(0,0,192,1)',
- //       borderColor: 'rgba(0,0,0,1)',
- //       borderWidth: 2,
- //       data: [65, 100, 80, 81, 56]
- //     }
- //   ]
- // })
- }
-
- ComponentDidUpdate(){
-    fetch()
-    .then()
-    .then()
-    .catch()
-
- }
-
- render() {
+      ]}
+    
   return (
     <div>
       <Pie
-        data={this.state}
+        data={datasets}
         options={{
           title:{
             display:true,
@@ -134,9 +100,9 @@ class Chart extends React.Component {
       />
     </div>
   );
-} 
+    }
  
-}
+      
   export default Chart;
 
 
@@ -166,7 +132,42 @@ class Chart extends React.Component {
 
 
 
+//  componentDidMount(){
+//     let chartData = this.dataHolding.setData();
+//        categories = Object.keys(chartData)
+//        amounts = Object.values(chartData)
+//        this.setState({
+//         labels: categories,
+//        })
+    //    this.setState({
+    //     datasets[data](amounts)
+    //    })
+//     })
+//   .catch(err => console.log(err))
+ //  this.setState({
+ //   labels: ['January', 'February', 'March',
+ //          'April', 'May'],
+ //   datasets: [
+ //     {
+ //       label: 'Rainfall',
+ //       backgroundColor: 'rgba(0,0,192,1)',
+ //       borderColor: 'rgba(0,0,0,1)',
+ //       borderWidth: 2,
+ //       data: [65, 100, 80, 81, 56]
+ //     }
+ //   ]
+ // })
+ 
 
+//  ComponentDidUpdate(){
+//     fetch()
+//     .then()
+//     .then()
+//     .catch()
+
+//  }
+
+//  render() {
 
 
 
