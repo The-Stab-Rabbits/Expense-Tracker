@@ -2,37 +2,34 @@ const { Pool } = require("pg");
 const db = require("../model/model");
 const controller = {};
 
-controller.getExpense = (req, res, next) => {
+controller.getExpense = async (req, res, next) => {
   const text = `SELECT * FROM expenses`;
   try {
-    db.query(text, (err, result) => {
-      // console.log(result.rows)
-      res.locals.expenses = result.rows;
-      // console.log(res.locals.expenses);
-      return next();
-    });
-  } catch {
+    const result = await db.query(text);
+    res.locals.expenses = result.rows;
+    return next();
+    
+  } catch (err) {
     return next({
-      log: "fatal error retrieving expenses from database inside controller.getExpense",
-      status: 404,
+      log: `fatal error retrieving expenses from database inside controller.getExpense. ${err}`,
+      status: 418,
+      message: 'Unable to retrieve expenses'
     });
   }
 };
 
-controller.getBalance = (req, res, next) => {
-  const text = `SELECT SUM(amount) FROM expenses`;
+controller.getBalance = async (req, res, next) => {
+  const text = `SELECT SUM (amount) FROM expenses`;
   try {
-    db.query(text, (err, result) => {
-      // console.log(result.rows)
-      // console.log(result.rows[0].sum)
-      res.locals.balance = result.rows[0].sum;
-      // console.log(res.locals.expenses);
-      return next();
-    });
-  } catch {
+    const result = await db.query(text);
+    res.locals.balance = result.rows[0].sum;
+    return next();
+
+  } catch (err) {
     return next({
-      log: "fatal error retrieving balance from database",
-      status: 404,
+      log: `fatal error retrieving expenses from database inside controller.getBalance. ${err}`,
+      status: 418,
+      message: 'Unable to retrieve balances'
     });
   }
 };
@@ -40,41 +37,35 @@ controller.getBalance = (req, res, next) => {
 controller.postExpense = async (req, res, next) => {
   const { vendor, amount, category, date} = req.body;
 
-  // console.log(req.body);
   try {
-    const text = `INSERT INTO expenses (vendor, amount, date, category) VALUES( '${vendor}', ${amount}, '${date}','${category}')`;
-    // const text2 = `SELECT * FROM expenses`;
-    db.query(text, (err, result) => {
-      res.locals.postexpense = req.body
-      
-      return next();
+    const text = `INSERT INTO expenses (vendor, amount, date, category) VALUES ($1, $2, $3, $4) RETURNING *`;
+    const result = await db.query(text, [vendor, amount, date, category])
+    res.locals.postexpense = result.rows;
+    return next();
 
-
-    });
-
-
-  } catch {
+  } catch (err) {
     return next({
-      log: "fatal error creating new expense in database inside controller.postExpense",
-      status: 404,
+      log: `fatal error retrieving expenses from database inside controller.postExpense. ${err}`,
+      status: 418,
+      message: 'Unable to send an expense'
     });
   }
 };
 controller.deleteExpense = (req, res, next) => {
   // const { vendor, amount, category, date} = req.params;
   const { id } = req.params;
-  console.log("req.params for delete", id);
+
   try {
-    const text = `DELETE FROM expenses WHERE id = ${id}`;
+    const text = `DELETE FROM expenses WHERE id = $1`;
+    db.query(text, [id])
     res.locals.oldExpense = req.params;
-    db.query(text, (err, result) => {
-      // console.log(result);
-      return next();
-    });
-  } catch {
+    return next();
+
+  } catch (err) {
     return next({
-      log: "fatal error deleteing  expense in database inside controller.deleteExpense",
-      status: 404,
+      log: `fatal error retrieving expenses from database inside controller.deleteExpense. ${err}`,
+      status: 418,
+      message: 'Unable to delete an expense'
     });
   }
 };

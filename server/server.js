@@ -24,14 +24,12 @@ app.get("/api/getBalance", controller.getBalance, (req, res) => {
 
 // Add new expense to database
 app.post("/api/expenses", controller.postExpense, (req, res) => {
-  return res.status(200).json()
+  return res.status(200).json(res.locals.postexpense);
 })
 
 // delete expense from database
 app.delete("/api/:id",controller.deleteExpense, (req, res) => {
-  // const id = req.params.id
-  // console.log(id)
-  return res.status(200).json(res.locals.oldExpense)
+  return res.status(200).json('Delete Successful')
 })
 // 
 // // retrieve last index key in database
