@@ -8,7 +8,7 @@ controller.getExpense = async (req, res, next) => {
     const result = await db.query(text);
     res.locals.expenses = result.rows;
     return next();
-    
+
   } catch (err) {
     return next({
       log: `fatal error retrieving expenses from database inside controller.getExpense. ${err}`,
@@ -35,8 +35,31 @@ controller.getBalance = async (req, res, next) => {
   }
 };
 
+controller.getMonths = async (req, res, next) => {
+  const month = req.params.month
+  let chartObj = {}
+  try {
+    const text = `SELECT * FROM expenses WHERE months = $1`
+    const result = await db.query(text, [month])
+    res.locals.data = result.rows
+    res.locals.data.forEach(element => {
+      if (!chartObj[element.category]) chartObj[element.category] = element.amount
+      else (chartObj[element.category]) += element.amount
+    })
+    res.locals.chart = chartObj
+    return next()
+  } catch {
+    return next({
+      log: `fatal error retrieving expenses from database inside controller.getMonths. ${err}`,
+      status: 418,
+      message: 'Unable to send the month data'
+    });
+  }
+
+}
+
 controller.postExpense = async (req, res, next) => {
-  const { vendor, amount, category, date} = req.body;
+  const { vendor, amount, category, date } = req.body;
 
   try {
     const text = `INSERT INTO expenses (vendor, amount, date, category) VALUES ($1, $2, $3, $4) RETURNING *`;
@@ -52,6 +75,7 @@ controller.postExpense = async (req, res, next) => {
     });
   }
 };
+
 controller.deleteExpense = (req, res, next) => {
   // const { vendor, amount, category, date} = req.params;
   const { id } = req.params;
