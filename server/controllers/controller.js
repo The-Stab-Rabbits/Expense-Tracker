@@ -38,9 +38,8 @@ controller.postExpense = async (req, res, next) => {
   const { vendor, amount, category, date} = req.body;
 
   try {
-    const text = `INSERT INTO expenses (vendor, amount, date, category) VALUES( $1, $2, $3, $4)`;
-    // const text2 = `SELECT * FROM expenses`;
-    const result = db.query(text, [vendor, amount, date, category])
+    const text = `INSERT INTO expenses (vendor, amount, date, category) VALUES ($1, $2, $3, $4) RETURNING *`;
+    const result = await db.query(text, [vendor, amount, date, category])
     res.locals.postexpense = result.rows;
     return next();
 

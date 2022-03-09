@@ -4,9 +4,6 @@ import Pink from "../image/PinkA.jpg";
 //Expenses Component
 const Expenses = () => {
 
-
-
-
   //created state to hold database
   const [database, setDatabase] = useState([]);
   //created state to hold net price of expense extries
@@ -15,25 +12,20 @@ const Expenses = () => {
   // const [currentIndex, setIndex] = useState(1);
   // upon rendering, sets state to current database
   
+  // Intial Render 
   useEffect(() => {
     fetch("/api/get")
       .then((response) => response.json())
       .then((data) => setDatabase(data));
-  }, [database]);
+  }, []);
 
-  // //upon rending, sets currentBalance state to current database net price
+
+  //upon rending, sets currentBalance state to current database net price
   useEffect(() => {
     fetch("/api/getBalance")
       .then((response) => response.json())
       .then((data) => setBalance(data));
-  }, [currentBalance]);
-
-  // //upon rending, sets currentIndex to index of last entry of database
-  // useEffect(() => {
-  //   fetch("/api/index")
-  //     .then((response) => response.json())
-  //     .then((data) => setIndex(data + 1));
-  // }, []);
+  }, []);
 
   //upon click, submits post requested, updated database with current extry.  Also updates current states with new information
   function submitClick() {
@@ -57,21 +49,11 @@ const Expenses = () => {
     fetch("/api/expenses", postOptions)
       .then((response) => response.json())
       .then(response => {
-        console.log(response)
+        console.log('response', response)
         setDatabase([...database, ...response])
       })
-      // .then((response) => {
-      //   fetch("/api/get")
-      //     .then((data) => data.json())
-      //     .then(data => console.log("Testing", data))
-      //     // .then((data) => {
-      //     //   setDatabase(data) 
-      //     // }); 
-      //       })
-      // .catch((error) => {
-      //   console.error("Error:", error);
-      // });
-  }
+
+    }
 
   function deleteClick(buttonIndex) {
     console.log("button index", buttonIndex);
@@ -85,18 +67,6 @@ const Expenses = () => {
       .then(() => console.log("Delete Successful"))
       .then(() => {
         setDatabase(database.filter(x => x.id !== id))
-        // fetch("/api/get")
-        //   .then((response) => response.json())
-        //   .then((data) => setDatabase(data));
-        // fetch("/api/getBalance")
-        //   .then((response) => response.json())
-        //   .then((data) => setBalance(data));
-
-   
-          // .catch(error => console.log(error));
-        // fetch("/api/index")
-        //   .then((response) => response.json())
-        //   .then((data) => setIndex(data));
       });
   }
   // adds new extry to current state
