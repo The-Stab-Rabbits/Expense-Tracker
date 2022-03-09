@@ -24,7 +24,7 @@ app.get("/api/getBalance", controller.getBalance, (req, res) => {
 
 // Add new expense to database
 app.post("/api/expenses", controller.postExpense, (req, res) => {
-  return res.status(200).json(res.locals.newExpense)
+  return res.status(200).json()
 })
 
 // delete expense from database
@@ -35,9 +35,9 @@ app.delete("/api/:id",controller.deleteExpense, (req, res) => {
 })
 // 
 // // retrieve last index key in database
-app.get("/api/index", controller.retrieveLastId, (req, res) => {
-  return res.status(200).json(res.locals.index)
-})
+// app.get("/api/index", controller.retrieveLastId, (req, res) => {
+//   return res.status(200).json(res.locals.index)
+// })
 //catch-all route hanlder for any requests to an unknown route
 app.use((req, res) => res.status(404).send('This is not the page you\'re looking for...'));
 

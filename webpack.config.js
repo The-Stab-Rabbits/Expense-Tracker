@@ -5,7 +5,7 @@ const path = require("path");
 module.exports = {
     entry: "./src/index.js",
     output: {
-        filename: "bundle.[hash].js",
+        filename: "bundle.js",
         path: path.resolve(__dirname, "dist"),
     },
     mode: process.env.NODE_ENV === 'development' ? 'development' : 'production',

@@ -3,10 +3,9 @@ const db = require("../model/model");
 const controller = {};
 
 controller.getExpense = (req, res, next) => {
-  const text = `SELECT * FROM expense1;`;
+  const text = `SELECT * FROM expenses`;
   try {
     db.query(text, (err, result) => {
-      r;
       // console.log(result.rows)
       res.locals.expenses = result.rows;
       // console.log(res.locals.expenses);
@@ -21,7 +20,7 @@ controller.getExpense = (req, res, next) => {
 };
 
 controller.getBalance = (req, res, next) => {
-  const text = `SELECT SUM(amount) FROM expense1`;
+  const text = `SELECT SUM(amount) FROM expenses`;
   try {
     db.query(text, (err, result) => {
       // console.log(result.rows)
@@ -38,17 +37,22 @@ controller.getBalance = (req, res, next) => {
   }
 };
 
-controller.postExpense = (req, res, next) => {
-  const { vendor, amount, category, id } = req.body;
+controller.postExpense = async (req, res, next) => {
+  const { vendor, amount, category, date} = req.body;
 
   // console.log(req.body);
   try {
-    const text = `INSERT INTO expense1 VALUES( '${vendor}', ${amount}, '2017-12-20','${category}', '${id}');`;
-    res.locals.newExpense = req.body;
+    const text = `INSERT INTO expenses (vendor, amount, date, category) VALUES( '${vendor}', ${amount}, '${date}','${category}')`;
+    // const text2 = `SELECT * FROM expenses`;
     db.query(text, (err, result) => {
-      // console.log(result);
+      res.locals.postexpense = req.body
+      
       return next();
+
+
     });
+
+
   } catch {
     return next({
       log: "fatal error creating new expense in database inside controller.postExpense",
@@ -61,7 +65,7 @@ controller.deleteExpense = (req, res, next) => {
   const { id } = req.params;
   console.log("req.params for delete", id);
   try {
-    const text = `DELETE FROM expense1 WHERE id = ${id}`;
+    const text = `DELETE FROM expenses WHERE id = ${id}`;
     res.locals.oldExpense = req.params;
     db.query(text, (err, result) => {
       // console.log(result);
@@ -75,28 +79,28 @@ controller.deleteExpense = (req, res, next) => {
   }
 };
 
-controller.retrieveLastId = (req, res, next) => {
-  const { vendor, amount, category } = req.body;
-  console.log(req.body);
-  try {
-    const text = `SELECT id FROM expense1 ORDER BY id DESC LIMIT 1`;
-    // console.log('res.locals.index', res.locals.index)
-    db.query(text, (err, result) => {
-      if (!result.rows[0].id) {
-        res.locals.index = 0;
-      } else {
-        res.locals.index = result.rows[0].id;
-      }
-      // console.log(result);
-      return next();
-    });
-  } catch {
-    return next({
-      log: "fatal error retriving last index",
-      status: 404,
-    });
-  }
-};
+// controller.retrieveLastId = (req, res, next) => {
+//   const { vendor, amount, category } = req.body;
+//   console.log(req.body);
+//   try {
+//     const text = `SELECT id FROM expenses ORDER BY id DESC LIMIT 1`;
+//     // console.log('res.locals.index', res.locals.index)
+//     db.query(text, (err, result) => {
+//       // if (!result.rows[0].id) {
+//       //   res.locals.index = 0;
+//       // } else {
+//         res.locals.index = result.rows[0].id;
+//       // }
+//       // console.log(result);
+//       return next();
+//     });
+//   } catch {
+//     return next({
+//       log: "fatal error retriving last index",
+//       status: 404,
+//     });
+//   }
+// };
 
 module.exports = controller;
 
