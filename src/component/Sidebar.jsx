@@ -8,8 +8,9 @@ const Sidebar = () => {
 
   return(
       <div className='side-bar'>
-          <div onClick={() => activeMonth('01')}>January {month}</div>
-          <div onClick={() => activeMonth('02')}>Feb {month}</div>
+          <div className='month-tab' onClick={() => activeMonth('00')}>Main {month}</div>
+          <div className='month-tab' onClick={() => activeMonth('01')}>January {month}</div>
+          <div className='month-tab' onClick={() => activeMonth('02')}>February {month}</div>
 
       </div>
 

@@ -106,40 +106,15 @@ const Expenses = () => {
 
 
       <div className="main">
-        <div className="innerMain">
-
-
-          <div className="container">
-            <h1>Expenses</h1>
-            <div className="addExpense">
-              
-              <input id="Amount" placeholder="Enter Cost"></input>
-
-              <input id="Vendor" placeholder="Vendor"></input>
-
-              <input id="Category" placeholder="Category"></input>
-              
-              <input type= 'date' id="Date"></input>
-
-              <div className="btnContainer">
-                <button className="submit" onClick={submitClick}>
-                  Submit
-                </button>
-              </div>
-
-            </div>
-          </div>
-
           
-          <div className='dashboard'>
+          
             <DataContext.Provider value={{ database, setDatabase, currentBalance, setBalance, month, setMonth, monthDatabase, setMonthDatabase, deleteClick, submitClick, activeMonth}}>
-              <Sidebar/>
+            <Sidebar/>
+
               {month === '00' ? <MainDash/> : <MonthlyDash />}
 
             </DataContext.Provider>
-          </div>
 
-        </div>
       </div>
     </>
   );

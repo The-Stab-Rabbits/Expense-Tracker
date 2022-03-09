@@ -3,6 +3,59 @@ html {
   font-family: "Roboto", sans-serif;
 }
 
+body .main { 
+  display: grid; 
+  grid-template-columns: repeat(5, 1fr); 
+  grid-template-rows: repeat(5, 1fr); 
+  grid-column-gap: 0px;
+  grid-row-gap: 0px; 
+  }
+  .side-bar { 
+    grid-area: 1 / 1 / 6 / 2; 
+    
+  } 
+
+  .main-dash { 
+    grid-area: 1 / 2 / 6 / 6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+  } 
+  
+  .month-tab {
+    padding: 30px 10px;
+    border-color: rgba(0, 0, 0, 0.11);
+    border-style: solid;
+    margin: 20px;
+    font-size: 30px;
+    text-align: center;
+    color: #f98798;
+    text-shadow: -0.5px 0 black, 0 0.5px black, 0.5px 0 black, 0 -0.5px black;
+  }
+  .month-tab hover {
+    background-color: grey;
+  }
+  
+  table, th, td {
+    border: 1px solid;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  td {
+    text-align: center;
+  }
+
+  .cards {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+
+  }
 body {
   background-color: lightgray;
   margin: 0;
@@ -53,21 +106,24 @@ ul {
 .addExpense {
   display: flex;
   flex-direction: column;
+  width: 50%;
 }
-.main {
-  display: flex;
-  justify-content: center;
-}
+/* .main {
+  padding: 20px;
+} */
 
-.cards {
+
+
+/* .cards {
   display: flex;
-  /* justify-content: center; */
+ justify-content: center; 
   flex-wrap: wrap;
   width: 800px;
-}
+} */
 
 .innerCard {
   margin: 10px;
+  width: 100%;
 }
 
 .balance {
