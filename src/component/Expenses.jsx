@@ -3,19 +3,25 @@ import "../styles/app.css";
 import Pink from "../image/PinkA.jpg";
 //Expenses Component
 const Expenses = () => {
+
+
+
+
   //created state to hold database
   const [database, setDatabase] = useState([]);
   //created state to hold net price of expense extries
   const [currentBalance, setBalance] = useState(0);
   // created state to hold index of database extries
-  const [currentIndex, setIndex] = useState(1);
-
+  // const [currentIndex, setIndex] = useState(1);
   // upon rendering, sets state to current database
   useEffect(() => {
     fetch("/api/get")
       .then((response) => response.json())
       .then((data) => setDatabase(data));
   }, []);
+
+
+
 
   // //upon rending, sets currentBalance state to current database net price
   useEffect(() => {
@@ -25,16 +31,15 @@ const Expenses = () => {
   }, []);
 
   // //upon rending, sets currentIndex to index of last entry of database
-  useEffect(() => {
-    fetch("/api/index")
-      .then((response) => response.json())
-      .then((data) => setIndex(data + 1));
-  }, []);
+  // useEffect(() => {
+  //   fetch("/api/index")
+  //     .then((response) => response.json())
+  //     .then((data) => setIndex(data + 1));
+  // }, []);
 
   //upon click, submits post requested, updated database with current extry.  Also updates current states with new information
   function submitClick() {
-    const index = currentIndex;
-    incrementIndex();
+
     const vendor = document.getElementById("Vendor").value;
     const amount = document.getElementById("Amount").value;
     const category = document.getElementById("Category").value;
@@ -44,22 +49,27 @@ const Expenses = () => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        id: index,
         amount: amount,
         vendor: vendor,
         category: category,
         date: date,
       }),
     };
+
     fetch("/api/expenses", postOptions)
       .then((response) => response.json())
-      .then((data) => {
-        addBalance(data.amount);
-        return addItem(data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+      .then(response => (console.log(response)))
+      // .then((response) => {
+      //   fetch("/api/get")
+      //     .then((data) => data.json())
+      //     .then(data => console.log("Testing", data))
+      //     // .then((data) => {
+      //     //   setDatabase(data) 
+      //     // }); 
+      //       })
+      // .catch((error) => {
+      //   console.error("Error:", error);
+      // });
   }
 
   function deleteClick(buttonIndex) {
@@ -69,6 +79,7 @@ const Expenses = () => {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
     };
+    
     fetch(`/api/${id}`, deleteOptions)
       .then((response) => response.json())
       .then((response) => {
@@ -78,9 +89,12 @@ const Expenses = () => {
         fetch("/api/getBalance")
           .then((response) => response.json())
           .then((data) => setBalance(data));
-        fetch("/api/index")
-          .then((response) => response.json())
-          .then((data) => setIndex(data));
+
+   
+          // .catch(error => console.log(error));
+        // fetch("/api/index")
+        //   .then((response) => response.json())
+        //   .then((data) => setIndex(data));
       });
   }
   // adds new extry to current state
@@ -93,9 +107,6 @@ const Expenses = () => {
     setBalance(Number(currentBalance) + Number(data));
   }
   // increments index state by 1.  // for whoever is working on this, we are having issues with the index state when you are add and delete buttons on the front end.  sometimes the index state does not match the database id
-  function incrementIndex() {
-    setIndex(currentIndex + 1);
-  }
 
   return (
     <>
@@ -168,8 +179,7 @@ const Expenses = () => {
                         deleteClick(item.id);
                       }}
                     >
-                      {" "}
-                      Remove Expense
+                      Remove Expense {item.id}
                     </button>
                   </ul>
                 </div>
