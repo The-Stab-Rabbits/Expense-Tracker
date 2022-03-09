@@ -14,21 +14,19 @@ const Expenses = () => {
   // created state to hold index of database extries
   // const [currentIndex, setIndex] = useState(1);
   // upon rendering, sets state to current database
+  
   useEffect(() => {
     fetch("/api/get")
       .then((response) => response.json())
       .then((data) => setDatabase(data));
-  }, []);
-
-
-
+  }, [database]);
 
   // //upon rending, sets currentBalance state to current database net price
   useEffect(() => {
     fetch("/api/getBalance")
       .then((response) => response.json())
       .then((data) => setBalance(data));
-  }, []);
+  }, [currentBalance]);
 
   // //upon rending, sets currentIndex to index of last entry of database
   // useEffect(() => {
@@ -58,7 +56,10 @@ const Expenses = () => {
 
     fetch("/api/expenses", postOptions)
       .then((response) => response.json())
-      .then(response => (console.log(response)))
+      .then(response => {
+        console.log(response)
+        setDatabase([...database, ...response])
+      })
       // .then((response) => {
       //   fetch("/api/get")
       //     .then((data) => data.json())
@@ -81,14 +82,15 @@ const Expenses = () => {
     };
     
     fetch(`/api/${id}`, deleteOptions)
-      .then((response) => response.json())
-      .then((response) => {
-        fetch("/api/get")
-          .then((response) => response.json())
-          .then((data) => setDatabase(data));
-        fetch("/api/getBalance")
-          .then((response) => response.json())
-          .then((data) => setBalance(data));
+      .then(() => console.log("Delete Successful"))
+      .then(() => {
+        setDatabase(database.filter(x => x.id !== id))
+        // fetch("/api/get")
+        //   .then((response) => response.json())
+        //   .then((data) => setDatabase(data));
+        // fetch("/api/getBalance")
+        //   .then((response) => response.json())
+        //   .then((data) => setBalance(data));
 
    
           // .catch(error => console.log(error));
