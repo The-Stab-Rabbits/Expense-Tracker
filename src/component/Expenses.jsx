@@ -7,6 +7,7 @@ import Sidebar from "./Sidebar";
 import { DataContext } from "./DataContext";
 import { Pie } from "react-chartjs-2";
 import Chart from "./Chart";
+import YearlyDash from "./YearlyDash"
 
 //Expenses Component
 const Expenses = () => {
@@ -17,11 +18,13 @@ const Expenses = () => {
   const [month, setMonth] = useState('00');
   const [monthDatabase, setMonthDatabase] = useState([])
   const [monthChart, setMonthChart] = useState([])
+  const [year, setYearData] = useState([])
+  const [yearChart, setYearChartData] = useState([])
 
   // created state to hold index of database extries
   // const [currentIndex, setIndex] = useState(1);
   // upon rendering, sets state to current database
-  
+
   // Intial Render 
   useEffect(() => {
     fetch("/api/get")
@@ -63,9 +66,9 @@ const Expenses = () => {
       })
       .then(() => fetch('/api/getBalance'))
       .then((response) => response.json())
-      .then((response)=> setBalance(response))
+      .then((response) => setBalance(response))
 
-  
+
 
   }
 
@@ -74,7 +77,7 @@ const Expenses = () => {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
     };
-    
+
     fetch(`/api/${id}`, deleteOptions)
       .then(() => console.log("Delete Successful"))
       .then(() => {
@@ -82,8 +85,8 @@ const Expenses = () => {
       })
       .then(() => fetch('/api/getBalance'))
       .then((response) => response.json())
-      .then((response)=> setBalance(response))
-    
+      .then((response) => setBalance(response))
+
     // const balance = await fetch('/api/getBalance')
     // .then((response) => response.json())
     // .then((data) => setBalance(data));
@@ -93,12 +96,24 @@ const Expenses = () => {
     setMonth(monthNum);
     console.log('currMonth', month)
     fetch(`/api/month/${monthNum}`)
-      .then((response=> response.json()))
+      .then((response => response.json()))
       .then((res) => {
-      console.log('fetch response', res)
-      setMonthDatabase(res.data)
-      setMonthChart(res.chart)
-    });
+        console.log('fetch response', res)
+        setMonthDatabase(res.data)
+        setMonthChart(res.chart)
+      });
+  }
+
+  function summary() {
+    setMonth('13')
+    fetch('/api/month/summary')
+      .then(response => response.json())
+      .then(response => {
+        setYearChartData(response.yearchart)
+        setYearData(response.yeardata)
+
+      })
+      .catch(err => console.log(err))
   }
 
   return (
@@ -113,10 +128,17 @@ const Expenses = () => {
       </header>
 
       <div className="main">
-     
-        <DataContext.Provider value={{ database, setDatabase, currentBalance, setBalance, month, setMonth, monthDatabase, setMonthDatabase, deleteClick, submitClick, activeMonth, monthChart, setMonthChart}}>
-          <Sidebar/>
-          {month === '00' ? <MainDash/> :  <MonthlyDash/>}
+
+        <DataContext.Provider value={{ database, setDatabase, currentBalance, setBalance, month, setMonth, monthDatabase, setMonthDatabase, deleteClick, submitClick, activeMonth, monthChart, setMonthChart, summary, year, yearChart }}>
+          <Sidebar />
+          {month === '00' ? <MainDash /> : <YearlyDash />}
+          {/* <div>
+          {(() => {
+            if (month === '00') <div> <MainDash /> </div>
+            else if (month === '13') <div> <YearlyDash /> </div>
+            else <div> <MonthlyDash /> </div>
+          })}
+          </div> */}
         </DataContext.Provider>
 
       </div>
@@ -125,3 +147,6 @@ const Expenses = () => {
 };
 
 export default Expenses;
+// // if (month === '00') <MainDash/>
+//   else if (month === '13') <YearlyDash/>
+  //  else <MonthlyDash />

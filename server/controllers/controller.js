@@ -54,14 +54,38 @@ controller.getMonths = async (req, res, next) => {
     // console.log('res.locals.data:' , res.locals.data)
 
     return next()
-  } catch {
+  } catch (err) {
     return next({
       log: `fatal error retrieving expenses from database inside controller.getMonths. ${err}`,
       status: 418,
       message: 'Unable to send the month data'
     });
   }
+}
 
+controller.getYear = async (req, res, next) => {
+
+  let yearObj = {};
+  try {
+    const text = `SELECT * FROM expenses`
+    const result = await db.query(text);
+    // console.log('result.rows', result.rows);
+    res.locals.yeardata = result.rows;
+    res.locals.yeardata.forEach(element => {
+      if (!yearObj[element.months]) yearObj[element.months] = element.amount
+      else (yearObj[element.months]) += element.amount
+    })
+    res.locals.yearchart = yearObj;
+    // console.log(res.locals);
+    return next();
+  }
+  catch (err) {
+    return next({
+      log: `fatal error retrieving expenses from database inside controller.getYear. ${err}`,
+      status: 418,
+      message: 'Unable to send the year data'
+    });
+  }
 }
 
 controller.postExpense = async (req, res, next) => {

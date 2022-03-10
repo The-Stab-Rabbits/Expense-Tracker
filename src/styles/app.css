@@ -201,4 +201,11 @@ span {
 
 .monthTotal{
   font-size: 30px;
+  float: left
 }
+
+.barChart{
+  font-size: 30px;
+  float: right
+}
+

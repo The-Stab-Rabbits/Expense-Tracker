@@ -3,7 +3,7 @@ import { DataContext } from "./DataContext";
 
 
 const Sidebar = () => {
-  const { month, setMonth, monthDatabase, setMonthDatabase, activeMonth } = useContext(DataContext)
+  const { month, setMonth, monthDatabase, setMonthDatabase, activeMonth, summary } = useContext(DataContext)
 
 
   return(
@@ -21,7 +21,7 @@ const Sidebar = () => {
           <div className='month-tab' onClick={() => activeMonth('10')}>October {month}</div>
           <div className='month-tab' onClick={() => activeMonth('11')}>November {month}</div>
           <div className='month-tab' onClick={() => activeMonth('12')}>December {month}</div>
-
+          <div className='month-tab' onClick={() => summary()}>Summary</div>
 
       </div>
 
