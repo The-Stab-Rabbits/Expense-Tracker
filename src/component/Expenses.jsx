@@ -104,13 +104,13 @@ const Expenses = () => {
   return (
     <>
 
-      <header>
+      {/* <header>
         <img src={Pink} alt="Logo" />
         <h1>©</h1>
         <div className="name">
           <h1>Stab Rabbits</h1>
         </div>
-      </header>
+      </header> */}
 
       <div className="main">
      
