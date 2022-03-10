@@ -24,16 +24,16 @@ body .main {
   } 
   
   .month-tab {
-    padding: 30px 10px;
+    padding: 15px 8px;
     border-color: rgba(0, 0, 0, 0.11);
     border-style: solid;
     margin: 20px;
-    font-size: 30px;
+    font-size: 20px;
     text-align: center;
     color: #f98798;
     text-shadow: -0.5px 0 black, 0 0.5px black, 0.5px 0 black, 0 -0.5px black;
   }
-  .month-tab hover {
+  .month-tab:hover {
     background-color: grey;
   }
   
@@ -186,7 +186,8 @@ input {
 }
 
 button:hover {
-  background-color: grey;
+  background-color: rgba(128, 128, 128, 0.315);
+  cursor: pointer;
 }
 .box {
   /* border: 1px solid black;
@@ -196,4 +197,8 @@ button:hover {
 span {
   font-size: 20px;
   margin-right: 5px;
+}
+
+.monthTotal{
+  font-size: 30px;
 }

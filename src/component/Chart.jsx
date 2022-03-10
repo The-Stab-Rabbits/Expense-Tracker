@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
+import { DataContext } from './DataContext';
+
 import { Pie } from 'react-chartjs-2'
 import {
   Chart as ChartJS,
@@ -27,6 +29,7 @@ import {
   Tooltip,
   SubTitle
 } from 'chart.js';
+import { useContext } from 'react';
 
 ChartJS.register(
   ArcElement,
@@ -55,17 +58,28 @@ ChartJS.register(
   SubTitle
 );
 
+// const MainDash = () => {
+// const { monthChart } = useContext(DataContext)
 // class Chart extends React.Component {
 const Chart = props => {
-  // constructor(props){
-  //   super(props)
-  //   this.state = {
+  const { month, monthChart } = useContext(DataContext)
+  console.log('month in chart', month);
+
+
+
+    // const colors = ['rgb(0, 132, 132)', 'rgb(132, 0, 132)', 'rgb(255, 99, 0)', 'rgb(255, 99, 132)', 'rgb(255, 99, 132)', 'rgb(255, 99, 132)'];
+    // const backgrounds = [];
+    // for(let i = 0; i < this.props.labels; i++){
+    //   backgrounds.push(colors[i]);
+    // }
+
     const datasets = {
-        labels : ['January', 'February', 'March', 'April', 'May'],
-    //   labels: {this.props.labels}
+        // labels : ['January', 'February', 'March', 'April', 'May'],
+        labels: Object.keys(monthChart),
         datasets: [
         {
           label: 'Rainfall',
+          //backgroundColor: backgrounds;
           backgroundColor: [
             'rgb(255, 99, 132)',
             'rgb(54, 162, 235)',
@@ -77,13 +91,19 @@ const Chart = props => {
           ],
           borderColor: 'rgba(0,0,0,1)',
           borderWidth: 2,
-          data: [65, 100, 80, 81, 56]
-        //   data: {this.props.values}
+          // data: [65, 100, 80, 81, 56]
+          data: Object.values(monthChart),
         }
       ]}
+      
+      let monthTotal = 0;
+      datasets.datasets[0].data.forEach(element => {
+       monthTotal += element;
+      })
     
   return (
-    <div>
+    <div className='chart'>
+      <div className='monthTotal'>Monthly Balance: ${monthTotal}</div>
       <Pie
         data={datasets}
         options={{
