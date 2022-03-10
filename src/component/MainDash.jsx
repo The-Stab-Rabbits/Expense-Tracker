@@ -57,7 +57,7 @@ const MainDash = () => {
               <li>
                 <span>Date: </span> {item.date}
               </li>
-            <button className="remove" onClick={() => { deleteClick(item.id)}}>Remove Expense {item.id}</button>
+            <button className="remove" onClick={() => { deleteClick(item.id)}}>Remove Expense</button>
           </ul>
           </div>
         ))}
