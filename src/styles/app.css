@@ -4,25 +4,77 @@ html {
 }
 
 /* MAIN CONTAINER - Expenses Component */
-body .main { 
-  display: grid; 
-  grid-template-columns: repeat(5, 1fr); 
-  grid-template-rows: repeat(5, 1fr); 
-  grid-column-gap: 0px;
-  grid-row-gap: 0px; 
+  body .main { 
+    display: grid; 
+    grid-template-columns: repeat(5, 1fr); 
+    grid-template-rows: repeat(5, 1fr); 
+    grid-column-gap: 0px;
+    grid-row-gap: 0px; 
   }
-  .side-bar { 
-    grid-area: 1 / 1 / 6 / 2; 
-    
-  } 
-
+  
+  body {
+    background-color: #DADED4;
+    margin: 0;
+  }
+  header {
+    background-color: #18181a;
+    width: 97.23vw;
+    height: 75px;
+    display: flex;
+    border: none;
+    padding-right: 40px;
+    padding-left: 40px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+  img {
+    margin-right: 20px;
+  }
+  header h1 {
+    display: block;
+    color: #d0dbbf;
+  }
+  
+  h1,
+  h2,
+  p {
+    color: #3C403D;
+  }
+  
+  /* MAIN DASHBOARD */
   .main-dash { 
     grid-area: 1 / 2 / 6 / 6;
     display: flex;
     flex-direction: column;
     align-items: center;
-    
   } 
+
+  li {
+    margin: 10px;
+    font-weight: bold;
+    font-family: "Roboto", sans-serif;
+  }
+  
+  input {
+    background-color: rgb(240, 240, 240);
+    margin: 5px;
+    padding: 5px;
+    border: none;
+    font-size: 16px;
+    border-radius: 5px;
+  }
+  
+  select {
+    background-color: rgb(240, 240, 240);
+    margin: 5px;
+    padding: 5px;
+    border: none;
+    font-size: 16px;
+    border-radius: 5px;
+  }
+  
+  /* MONTHLY DASHBOARD */
+  /* Pie Chart */
   .chart {
     margin: 15px;
     display: flex;
@@ -30,8 +82,6 @@ body .main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    
-
   }
   
   .monthly-dash { 
@@ -41,7 +91,6 @@ body .main {
     align-items: center;
     
   } 
-  
   .month-tab {
     padding: 15px 8px;
     border-color: #031D44;
@@ -60,73 +109,61 @@ body .main {
     box-shadow: rgba(0, 0, 0, 0.096) 0 8px 15px;
   }
 
-  body {
-    background-color: #DADED4;
-    margin: 0;
-  }
-  header {
-    background-color: #18181a;
-    width: 97.23vw;
-    height: 75px;
-    display: flex;
-    border: none;
-    padding-right: 40px;
-    padding-left: 40px;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    /* margin-bottom: 40px; */
-  }
-  img {
-    margin-right: 20px;
-  }
-  header h1 {
-    display: block;
-    color: #d0dbbf;
-  }
+/* SIDEBAR */
+  .side-bar { 
+    grid-area: 1 / 1 / 6 / 2; 
+  } 
+
   
-  h1,
-  h2,
-  p {
-    color: #3C403D;
-  }
-  .cards {
-    /* display: flex; */
-    /* flex-direction: column;
-    align-items: center; */
-    /* flex-wrap: wrap; */
-    overflow-y: auto; 
-    height: 40%;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, auto));
-    width: 100%;
+ /* EXPENSE CARDS */
+ .cards {
+   overflow-y: auto; 
+   height: 40%;
+   display: grid;
+   grid-template-columns: repeat(auto-fill, minmax(350px, auto));
+   width: 100%;
 
-  }
-  .innerCard {
-    display: flex;
-    justify-content: center;
-    margin: 10px;
-    /* text-align: center; */
-    /* background-color: #314635b9;
-     */
-     background-color: rgba(250, 231, 184, 0.788);
-    border: 1px solid rgb(0, 0, 0, 0.3);
-    box-shadow: 10px 10px 8px #bbb;
-    border-radius: 25px;
-    /* padding: 10px; */
-  /* max-width: 10vw;
-  min-width: 10vw; */
-}
+ }
+ .innerCard {
+   display: flex;
+   justify-content: center;
+   margin: 10px;
+   background-color: rgba(250, 231, 184, 0.788);
+   border: 1px solid rgb(0, 0, 0, 0.3);
+   box-shadow: 10px 10px 8px #bbb;
+   border-radius: 25px;
+ }
 
-.innerCard ul {
-  color:#3C403D;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  align-self: center;
-  justify-content: center;
-  list-style-type: none;
-  padding: 0px;
-}
+ .innerCard ul {
+   color:#3C403D;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   align-self: center;
+   justify-content: center;
+   list-style-type: none;
+   padding: 0px;
+ }
+
+ /* ADDING EXPENSE FORM */
+ .addExpense {
+   margin-top: 10px;
+   display: flex;
+   flex-direction: column;
+   width: 50%;
+   text-align: center;
+ }
+ 
+ .btnContainer {
+   margin-top: 10px;
+ }
+ 
+ .balance {
+   margin: 5px;
+   display: flex;
+   justify-content: center;
+ }
+
 
 .founders {
   display: flex;
@@ -134,49 +171,7 @@ body .main {
   text-align: center;
 }
 
-.addExpense {
-  margin-top: 10px;
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-  text-align: center;
-}
 
-.btnContainer {
-  margin-top: 10px;
-}
-
-.balance {
-  margin: 5px;
-  display: flex;
-  justify-content: center;
-}
-
-h1 {
-}
-li {
-  margin: 10px;
-  font-weight: bold;
-  font-family: "Roboto", sans-serif;
-}
-
-input {
-  background-color: rgb(240, 240, 240);
-  margin: 5px;
-  padding: 5px;
-  border: none;
-  font-size: 16px;
-  border-radius: 5px;
-}
-
-select {
-  background-color: rgb(240, 240, 240);
-  margin: 5px;
-  padding: 5px;
-  border: none;
-  font-size: 16px;
-  border-radius: 5px;
-}
 
 .submit {
     appearance: none;
@@ -295,15 +290,15 @@ span {
   float: right;
   width: 1000px;
   align-self: flex-end;
-  box-shadow: 2px 2px 2px 2px;
-  background-color:rgb(243, 241, 241);
+
+
   height: 555px;
 }
 
 .pieChart{
-  box-shadow: 2px 2px 2px 2px;
+
   width: 600px;
-  background-color:rgb(243, 241, 241);
+
 }
 
 .yearCharts{

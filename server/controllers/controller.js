@@ -75,12 +75,12 @@ controller.getYear = async (req, res, next) => {
       if (!yearObj[element.months]) yearObj[element.months] = element.amount
       else (yearObj[element.months]) += element.amount
     })
-    // res.locals.yeardata.forEach(element => {
-    //   if (!catObj[element.category]) catObj[element.category] = element.amount
-    //   else (catObj[element.category]) += element.amount
-    // })
+    res.locals.yeardata.forEach(element => {
+      if (!catObj[element.category]) catObj[element.category] = element.amount
+      else (catObj[element.category]) += element.amount
+    })
     res.locals.yearchart = yearObj;
-    // res.locals.catchart = catObj
+    res.locals.catchart = catObj
     // console.log('res.locals.catChart',res.locals.catChart);
     return next();
   }
