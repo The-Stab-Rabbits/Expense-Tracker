@@ -37,16 +37,22 @@ controller.getBalance = async (req, res, next) => {
 
 controller.getMonths = async (req, res, next) => {
   const month = req.params.month
+  // console.log('month param', month)
   let chartObj = {}
   try {
     const text = `SELECT * FROM expenses WHERE months = $1`
     const result = await db.query(text, [month])
+    // console.log('result', result)
     res.locals.data = result.rows
     res.locals.data.forEach(element => {
       if (!chartObj[element.category]) chartObj[element.category] = element.amount
       else (chartObj[element.category]) += element.amount
     })
     res.locals.chart = chartObj
+
+    // console.log('res.locals.chart:' ,res.locals.chart)
+    // console.log('res.locals.data:' , res.locals.data)
+
     return next()
   } catch {
     return next({
@@ -60,10 +66,10 @@ controller.getMonths = async (req, res, next) => {
 
 controller.postExpense = async (req, res, next) => {
   const { vendor, amount, category, date } = req.body;
-
+  const month = date.slice(5, 7)
   try {
-    const text = `INSERT INTO expenses (vendor, amount, date, category) VALUES ($1, $2, $3, $4) RETURNING *`;
-    const result = await db.query(text, [vendor, amount, date, category])
+    const text = `INSERT INTO expenses (vendor, amount, date, category, months) VALUES ($1, $2, $3, $4, $5) RETURNING *`;
+    const result = await db.query(text, [vendor, amount, date, category, month])
     res.locals.postexpense = result.rows;
     return next();
 

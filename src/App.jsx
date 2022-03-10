@@ -5,10 +5,7 @@ import Chart from "./component/Chart"
 const App = () => {
   return (
     <div>
-      <div>
         <Expenses />
-      </div>
-      <Chart />
     </div>
   );
 };

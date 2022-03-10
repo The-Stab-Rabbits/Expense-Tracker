@@ -5,6 +5,8 @@ import MainDash from "./MainDash";
 import MonthlyDash from "./MonthlyDash";
 import Sidebar from "./Sidebar";
 import { DataContext } from "./DataContext";
+import { Pie } from "react-chartjs-2";
+import Chart from "./Chart";
 
 //Expenses Component
 const Expenses = () => {
@@ -13,7 +15,9 @@ const Expenses = () => {
   //created state to hold net price of expense extries
   const [currentBalance, setBalance] = useState(0);
   const [month, setMonth] = useState('00');
-  const [monthDatabase, setMonthDatabase] = useState(null)
+  const [monthDatabase, setMonthDatabase] = useState([])
+  const [monthChart, setMonthChart] = useState([])
+
   // created state to hold index of database extries
   // const [currentIndex, setIndex] = useState(1);
   // upon rendering, sets state to current database
@@ -88,9 +92,13 @@ const Expenses = () => {
   function activeMonth(monthNum) {
     setMonth(monthNum);
     console.log('currMonth', month)
-    // fetch(`/api/month/${monthNum}`)
-    // .then((response=> response.json()))
-    // .then((data) => setMonthDatabase(data))
+    fetch(`/api/month/${monthNum}`)
+      .then((response=> response.json()))
+      .then((res) => {
+      console.log('fetch response', res)
+      setMonthDatabase(res.data)
+      setMonthChart(res.chart)
+    });
   }
 
   return (
@@ -104,16 +112,12 @@ const Expenses = () => {
         </div>
       </header>
 
-
       <div className="main">
-          
-          
-            <DataContext.Provider value={{ database, setDatabase, currentBalance, setBalance, month, setMonth, monthDatabase, setMonthDatabase, deleteClick, submitClick, activeMonth}}>
-            <Sidebar/>
-
-              {month === '00' ? <MainDash/> : <MonthlyDash />}
-
-            </DataContext.Provider>
+     
+        <DataContext.Provider value={{ database, setDatabase, currentBalance, setBalance, month, setMonth, monthDatabase, setMonthDatabase, deleteClick, submitClick, activeMonth, monthChart, setMonthChart}}>
+          <Sidebar/>
+          {month === '00' ? <MainDash/> :  <MonthlyDash/>}
+        </DataContext.Provider>
 
       </div>
     </>
