@@ -21,10 +21,15 @@ app.get('/api/get', controller.getExpense, (req, res) => {
 app.get("/api/getBalance", controller.getBalance, (req, res) => {
   return res.status(200).json(res.locals.balance)
 })
+app.get("/api/month/summary", controller.getYear, (req, res) => {
+  return res.status(200).json(res.locals)
+})
 
 app.get("/api/month/:month", controller.getMonths, (req, res) => {
   return res.status(200).json(res.locals);
 })
+
+
 // Add new expense to database
 app.post("/api/expenses", controller.postExpense, (req, res) => {
   return res.status(200).json(res.locals.postexpense);
