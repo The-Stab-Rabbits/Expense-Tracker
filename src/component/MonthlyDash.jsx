@@ -5,13 +5,14 @@ import Chart from "./Chart";
 
 
 const MonthlyDash = () => {
-    const {currentBalance, setBalance, month, setMonth, deleteClick,  monthDatabase, setMonthDatabase, monthChart, setMonthChart } = useContext(DataContext)
+    const {database, currentBalance, setBalance, month, setMonth, deleteClick,  monthDatabase, setMonthDatabase, monthChart, setMonthChart } = useContext(DataContext)
     
 
 return (
-
+    <>
     <div className='monthly-dash'>
         <Chart/> 
+    {/* </div> */}
 
       <div className='cards'>
       {monthDatabase.map((item) => (
@@ -29,13 +30,14 @@ return (
               <li>
                 <span>Date: </span> {item.date}
               </li>
-              <button className="remove" onClick={() => {deleteClick(item.id);}}> Remove Expense {item.id} </button>
+              <button className="remove" onClick={() => {deleteClick(item.id);}}> Remove Expense </button>
             </ul> 
           
       </div>
       ))}
         </div>
-    </div>
+        </div>
+    </>
 
 
 )

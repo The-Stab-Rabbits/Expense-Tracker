@@ -66,17 +66,22 @@ controller.getMonths = async (req, res, next) => {
 controller.getYear = async (req, res, next) => {
 
   let yearObj = {};
+  let catObj = {}
   try {
     const text = `SELECT * FROM expenses`
     const result = await db.query(text);
-    // console.log('result.rows', result.rows);
     res.locals.yeardata = result.rows;
     res.locals.yeardata.forEach(element => {
       if (!yearObj[element.months]) yearObj[element.months] = element.amount
       else (yearObj[element.months]) += element.amount
     })
+    // res.locals.yeardata.forEach(element => {
+    //   if (!catObj[element.category]) catObj[element.category] = element.amount
+    //   else (catObj[element.category]) += element.amount
+    // })
     res.locals.yearchart = yearObj;
-    // console.log(res.locals);
+    // res.locals.catchart = catObj
+    // console.log('res.locals.catChart',res.locals.catChart);
     return next();
   }
   catch (err) {

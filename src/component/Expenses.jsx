@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../styles/app.css";
-import Pink from "../image/PinkA.jpg";
+import Stab from "../image/stabrabbits3.jpg";
 import MainDash from "./MainDash";
 import MonthlyDash from "./MonthlyDash";
 import Sidebar from "./Sidebar";
@@ -20,6 +20,7 @@ const Expenses = () => {
   const [monthChart, setMonthChart] = useState([])
   const [year, setYearData] = useState([])
   const [yearChart, setYearChartData] = useState([])
+  const [catChart, setCatChart] = useState([])
 
   // created state to hold index of database extries
   // const [currentIndex, setIndex] = useState(1);
@@ -82,6 +83,7 @@ const Expenses = () => {
       .then(() => console.log("Delete Successful"))
       .then(() => {
         setDatabase(database.filter(x => x.id !== id))
+        setMonthDatabase(database.filter(x => x.id !== id))
       })
       .then(() => fetch('/api/getBalance'))
       .then((response) => response.json())
@@ -101,6 +103,7 @@ const Expenses = () => {
         console.log('fetch response', res)
         setMonthDatabase(res.data)
         setMonthChart(res.chart)
+        
       });
   }
 
@@ -111,34 +114,30 @@ const Expenses = () => {
       .then(response => {
         setYearChartData(response.yearchart)
         setYearData(response.yeardata)
-
+        // console.log(response.catchart)
+        setCatChart(response.catchart)
       })
       .catch(err => console.log(err))
   }
 
+  console.log('catChart in expeses', catChart)
+
   return (
     <>
 
-      {/* <header>
-        <img src={Pink} alt="Logo" />
-        <h1>©</h1>
+      <header>
+        <img src={Stab} alt="Logo" />
         <div className="name">
           <h1>Stab Rabbits</h1>
         </div>
-      </header> */}
+      </header>
 
       <div className="main">
 
-        <DataContext.Provider value={{ database, setDatabase, currentBalance, setBalance, month, setMonth, monthDatabase, setMonthDatabase, deleteClick, submitClick, activeMonth, monthChart, setMonthChart, summary, year, yearChart }}>
+        <DataContext.Provider value={{ database, setDatabase, currentBalance, setBalance, month, setMonth, monthDatabase, setMonthDatabase, deleteClick, submitClick, activeMonth, monthChart, setMonthChart, summary, year, yearChart, catChart, setCatChart }}>
           <Sidebar />
           {month === '00' ? <MainDash /> : (month === "13" ? <YearlyDash/> : <MonthlyDash/>)}
-          {/* <div>
-          {(() => {
-            if (month === '00') <div> <MainDash /> </div>
-            else if (month === '13') <div> <YearlyDash /> </div>
-            else <div> <MonthlyDash /> </div>
-          })}
-          </div> */}
+         
         </DataContext.Provider>
 
       </div>
