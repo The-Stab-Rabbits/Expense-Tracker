@@ -62,29 +62,24 @@ const Chart = props => {
     console.log('catChart', catChart)
     const datasets = {
         // labels : ['January', 'February', 'March', 'April', 'May'],
-        labels: Object.keys(yearChart),
+        labels: Object.keys(catChart),
         datasets: [
             {
                 label: 'Rainfall',
                 //backgroundColor: backgrounds;
                 backgroundColor: [
-                    'rgb(158, 15, 2)',
-                    'rgb(158, 148, 2)',
-                    'rgb(158, 85, 2)',
-                    'rgb(7, 158, 2)',
-                    'rgb(2, 158, 101)',
-                    'rgb(2, 119, 158)',
-                    'rgb(2, 64, 158)',
-                    'rgb(8, 2, 120)',
-                    'rgb(153, 2, 158)',
-                    'rgb(230, 27, 5)',
-                    'rgb(230, 215, 5)',
-                    'rgb(230, 5, 136)',
+                    'rgb(255, 99, 132)',
+                    'rgb(54, 162, 235)',
+                    'rgb(255, 205, 86)',
+                    'rgba(22,44,15,1)',
+                    'rgba(66,192,192,1)',
+                    'rgba(66,0,192,1)',
+                    'rgba(66,192,192,1)',
                 ],
                 borderColor: 'rgba(0,0,0,1)',
                 borderWidth: 2,
                 // data: [65, 100, 80, 81, 56]
-                data: Object.values(yearChart),
+                data: Object.values(catChart),
             }
         ]
     }
@@ -127,7 +122,7 @@ const Chart = props => {
         }
     }
     return (
-        <div className='yearlyDash'>
+        <div className='monthly-dash'>
             <div className='monthTotal' >Yearly Balance: ${monthTotal}</div>
         <div className='yearCharts'>
             
