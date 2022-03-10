@@ -131,7 +131,7 @@ const Expenses = () => {
 
         <DataContext.Provider value={{ database, setDatabase, currentBalance, setBalance, month, setMonth, monthDatabase, setMonthDatabase, deleteClick, submitClick, activeMonth, monthChart, setMonthChart, summary, year, yearChart }}>
           <Sidebar />
-          {month === '00' ? <MainDash /> : <YearlyDash />}
+          {month === '00' ? <MainDash /> : (month === "13" ? <YearlyDash/> : <MonthlyDash/>)}
           {/* <div>
           {(() => {
             if (month === '00') <div> <MainDash /> </div>
