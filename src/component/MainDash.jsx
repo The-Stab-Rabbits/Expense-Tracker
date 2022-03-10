@@ -31,6 +31,26 @@ const MainDash = () => {
             <button className="submit" onClick={submitClick}>
               Submit
             </button>
+
+      <div className="cards">
+        {database.map((item) => (
+          
+          <div className="innerCard" key = {item.id}>
+            <ul>
+              <li>
+                <span>Price: </span>${item.amount}
+              </li>
+              <li>
+                <span>Vendor: </span> {item.vendor}
+              </li>
+              <li>
+                <span>Category: </span> {item.category}
+              </li>
+              <li>
+                <span>Date: </span> {item.date}
+              </li>
+            <button className="remove" onClick={() => { deleteClick(item.id)}}>Remove Expense</button>
+          </ul>
           </div>
 
         </div>
