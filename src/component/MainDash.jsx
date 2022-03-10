@@ -10,7 +10,7 @@ const MainDash = () => {
     <>
       <div className="main-dash">
         <div className="addExpense">
-          <h1>Expenses</h1>
+          <h1>Add Expenses</h1>
 
           <input id="Amount" placeholder="Enter Cost"></input>
 
@@ -33,6 +33,10 @@ const MainDash = () => {
             </button>
             </div>
             </div>
+
+          <div className="balance">
+              <h2>Balance: $ {currentBalance}</h2>
+          </div>
 
       <div className="cards">
         {database.map((item) => (
@@ -64,24 +68,4 @@ const MainDash = () => {
 
 }
 
-{/* <table>
-              <thead>
-                <tr>
-                  <th>Price</th>
-                  <th>Vendor</th>
-                  <th>Category</th>
-                  <th>Date</th>
-                  <th>Delete</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>${item.amount}</td>
-                  <td>{item.vendor}</td>
-                  <td>{item.category}</td>
-                  <td>{item.date}</td>
-                  <td><button className="remove" onClick={() => {deleteClick(item.id)}}>❌</button></td>
-                </tr>
-              </tbody>
-              </table> */}
 export default MainDash;

@@ -3,6 +3,7 @@ html {
   font-family: "Roboto", sans-serif;
 }
 
+/* MAIN CONTAINER - Expenses Component */
 body .main { 
   display: grid; 
   grid-template-columns: repeat(5, 1fr); 
@@ -22,36 +23,41 @@ body .main {
     align-items: center;
     
   } 
+  .chart {
+    margin: 15px;
+    display: flex;
+    width: 33%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+
+  }
+  
+  .monthly-dash { 
+    grid-area: 1 / 2 / 6 / 6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+  } 
   
   .month-tab {
     padding: 15px 8px;
-    border-color: rgba(0, 0, 0, 0.11);
+    border-color: #031D44;
     border-style: solid;
     border-radius: 25px;
     margin: 20px;
     font-size: 20px;
     text-align: center;
     color: #031D44;
+    background-color: #d0dbbf;
   }
   .month-tab:hover {
     background-color: #39603D;
     color: white;
     transform: translateY(-2px);
     box-shadow: rgba(0, 0, 0, 0.096) 0 8px 15px;
-
-
-  }
-  
-  table, th, td {
-    border: 1px solid;
-  }
-
-  table {
-    width: 100%;
-  }
-
-  td {
-    text-align: center;
   }
 
   body {
@@ -60,7 +66,7 @@ body .main {
   }
   header {
     background-color: #18181a;
-    width: 100vw;
+    width: 97.23vw;
     height: 75px;
     display: flex;
     border: none;
@@ -68,16 +74,14 @@ body .main {
     padding-left: 40px;
     padding-top: 15px;
     padding-bottom: 15px;
-    margin-bottom: 40px;
+    /* margin-bottom: 40px; */
   }
   img {
     margin-right: 20px;
   }
-  h3 {
-  }
-  header h3 {
+  header h1 {
     display: block;
-    color: darkgrey;
+    color: #d0dbbf;
   }
   
   h1,
@@ -90,6 +94,8 @@ body .main {
     /* flex-direction: column;
     align-items: center; */
     /* flex-wrap: wrap; */
+    overflow-y: auto; 
+    height: 40%;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, auto));
     width: 100%;
@@ -129,12 +135,19 @@ body .main {
 }
 
 .addExpense {
+  margin-top: 10px;
   display: flex;
   flex-direction: column;
   width: 50%;
+  text-align: center;
+}
+
+.btnContainer {
+  margin-top: 10px;
 }
 
 .balance {
+  margin: 5px;
   display: flex;
   justify-content: center;
 }
@@ -148,7 +161,7 @@ li {
 }
 
 input {
-  background-color: rgb(226, 226, 226);
+  background-color: rgb(240, 240, 240);
   margin: 5px;
   padding: 5px;
   border: none;
@@ -157,7 +170,7 @@ input {
 }
 
 select {
-  background-color:  rgb(226, 226, 226);
+  background-color: rgb(240, 240, 240);
   margin: 5px;
   padding: 5px;
   border: none;
@@ -206,7 +219,7 @@ select {
 
   
 
-  .innerCard:hover {
+.innerCard:hover {
     transform: translateY(-2px);
     box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
 
@@ -272,12 +285,35 @@ span {
 }
 
 .monthTotal{
+  margin-bottom: 10px;
   font-size: 30px;
   float: left
 }
 
 .barChart{
   font-size: 30px;
-  float: right
+  float: right;
+  width: 1000px;
+  align-self: flex-end;
+  box-shadow: 2px 2px 2px 2px;
+  background-color:rgb(243, 241, 241);
+  height: 555px;
 }
 
+.pieChart{
+  box-shadow: 2px 2px 2px 2px;
+  width: 600px;
+  background-color:rgb(243, 241, 241);
+}
+
+.yearCharts{
+  display:flex;
+  gap: 30px;
+
+}
+
+.yearlyDash{
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}

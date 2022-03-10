@@ -58,8 +58,8 @@ ChartJS.register(
     SubTitle
 );
 const Chart = props => {
-    const { year, yearChart } = useContext(DataContext)
-
+    const { year, yearChart, catChart } = useContext(DataContext)
+    console.log('catChart', catChart)
     const datasets = {
         // labels : ['January', 'February', 'March', 'April', 'May'],
         labels: Object.keys(yearChart),
@@ -68,13 +68,18 @@ const Chart = props => {
                 label: 'Rainfall',
                 //backgroundColor: backgrounds;
                 backgroundColor: [
-                    'rgb(255, 99, 132)',
-                    'rgb(54, 162, 235)',
-                    'rgb(255, 205, 86)',
-                    'rgba(22,44,15,1)',
-                    'rgba(66,192,192,1)',
-                    'rgba(66,0,192,1)',
-                    'rgba(66,192,192,1)',
+                    'rgb(158, 15, 2)',
+                    'rgb(158, 148, 2)',
+                    'rgb(158, 85, 2)',
+                    'rgb(7, 158, 2)',
+                    'rgb(2, 158, 101)',
+                    'rgb(2, 119, 158)',
+                    'rgb(2, 64, 158)',
+                    'rgb(8, 2, 120)',
+                    'rgb(153, 2, 158)',
+                    'rgb(230, 27, 5)',
+                    'rgb(230, 215, 5)',
+                    'rgb(230, 5, 136)',
                 ],
                 borderColor: 'rgba(0,0,0,1)',
                 borderWidth: 2,
@@ -88,7 +93,7 @@ const Chart = props => {
     datasets.datasets[0].data.forEach(element => {
         monthTotal += element;
     })
-    console.log(yearChart, Object.values(yearChart));
+    // console.log(yearChart, Object.values(yearChart));
 
     const yearSummaryAmounts = []
 
@@ -122,8 +127,10 @@ const Chart = props => {
         }
     }
     return (
-        <div className='chart'>
-            <div className='monthTotal' >Monthly Balance: ${monthTotal}</div>
+        <div className='yearlyDash'>
+            <div className='monthTotal' >Yearly Balance: ${monthTotal}</div>
+        <div className='yearCharts'>
+            
             <div className="pieChart">
                 <Pie
                     data={datasets}
@@ -131,11 +138,14 @@ const Chart = props => {
                         title: {
                             display: true,
                             text: 'Average Rainfall per month',
-                            fontSize: 20
+                            fontSize: 60
                         },
                         legend: {
                             display: true,
                             position: 'right'
+                        },
+                        interaction:{
+                            mide:'point'
                         }
                     }}
                 />
@@ -155,6 +165,7 @@ const Chart = props => {
                         }
                     }} />
             </div>
+        </div>
         </div>
     );
 }
