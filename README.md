@@ -36,11 +36,5 @@ Expense tracker for basic budgeting.
 <hr>
 
 ## Future Contibutions
-We hope you enjoy this application. If you found this interesting or helpful at all, feel free to drop a :star: [![GitHub stars](https://img.shields.io/github/stars/movie-fads/movie-fads?style=social&label=Star&)](https://github.com/movie-fads/movie-fads/stargazers) :star: on this project to show your support!
-
-
-Possible features for future iterations. 
-- Allow users to share between other users their favorite movies
-- Statistics on how many other users favorites the same movie
-
+We hope you enjoy this application. If you found this interesting or helpful at all, feel free to drop a :star: [![GitHub stars](https://img.shields.io/github/stars/The-Stab-Rabbits/Expense-Tracker?style=social&label=Star&)](https://github.com/The-Stab-Rabbits/Expense-Tracker/stargazers) :star: on this project to show your support!
 
