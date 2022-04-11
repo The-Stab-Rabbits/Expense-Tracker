@@ -1,78 +1,46 @@
-# groupscratchproject
-Hello
+![](/client/images/logo/move-fads-title.png) 
 
-git remote 
+<h2 align="center">Expense Tracker</h2>
 
-    // "start": "webpack serve  --hot --open",
-    // "build": "webpack --config webpack.config.js --mode production"
+<br>
 
-    
-Front End
-
-- Ability to enter data and send it to the backend (POST).  Create function to send this data onclick of Button
-
-Expenses
-    Price
-    Vendor
-    Category (food, clothes, etc)
-    Date
-
-Bank Information
-    Liquid Cash
-    Bank Name
-
-Investments
-    Broker
-        -Stock Value
-    401k
-        -401k Value
-
-Debt
-    Credit Card Debt
-        -Debt Value
-    Student Loans
-        -Student Loan Amount
+## About Us
+Expense tracker for basic budgeting.
 
 
--Receive data from backend to display on page (GET) with onclick function-
--Remove expenses by sending (DELETE) request from backend, also refreses display with new updated data?
+## Getting Started
+
+1. Fork and clone this repository.
+2. ```npm install```
+3. ```npm run conc```
 
 
-
-Server
-    - Get request: get data that has already been inputed (loads on start)
-    - Post request: for inputing data
-    - Delete request: delte inputed data
-    -  
-
-Controller
-
-Backend
-    - setup sql database (what one?)
-    /*
- install pg
+## Demo
+**Login Page**
+![]() 
 
 
-Model
-    require pool pg
-    get uri from elephant
-    create new instance of pool using connection string
-    export pool
+## Technologies
+[React](https://reactjs.org/) | [React Hooks](https://reactjs.org/docs/hooks-intro.html)| [Express.js](https://expressjs.com/) | [PostgreSQL](https://www.postgresql.org/) | [ChartJS](https://www.chartjs.org/)
 
-Controller
+***
 
-    setup controller
+## The movie fads Team
+<hr>
+
+> Dane Corpion [@DaneCorpion](https://github.com/DaneCorpion) <br />
+> Fernando Luna [@lunaf-github](https://github.com/lunaf-github) <br />
+> Mathias Perfumo [@mperfumo](https://github.com/mperfumo) <br />
+> Sophia Sam  [@sophiasam96](https://github.com/sophiasam96) <br />
+
+<hr>
+
+## Future Contibutions
+We hope you enjoy this application. If you found this interesting or helpful at all, feel free to drop a :star: [![GitHub stars](https://img.shields.io/github/stars/movie-fads/movie-fads?style=social&label=Star&)](https://github.com/movie-fads/movie-fads/stargazers) :star: on this project to show your support!
 
 
+Possible features for future iterations. 
+- Allow users to share between other users their favorite movies
+- Statistics on how many other users favorites the same movie
 
-[SQL QUERY]
 
-CREATE TABLE expense (
-  Vendor varchar(255),
-  Amount int,
-  Date date,
-  Category varchar(255)
-);
-
-INSERT INTO expense (Vendor, Amount, Date, Category)
-VALUES (YachtSales, 20000000, CURRENT_DATE, Luxury);
