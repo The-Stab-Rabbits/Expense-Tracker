@@ -12,7 +12,7 @@ Expense tracker for basic budgeting.
 
 1. Fork and clone this repository.
 2. ```npm install```
-3. ```npm run conc```
+3. ```npm run dev```
 
 
 ## Demo
