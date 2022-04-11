@@ -1,4 +1,4 @@
-![](/client/images/logo/move-fads-title.png) 
+![]() 
 
 <h2 align="center">Expense Tracker</h2>
 
