@@ -16,9 +16,14 @@ Expense tracker for basic budgeting.
 
 
 ## Demo
-**Login Page**
-![]() 
+**Add an Expense**
+![](/src/image/adding-expense.gif) 
 
+**Remove an Expense**
+![](/src/image/delete-expense.gif) 
+
+**Navigate through monthly Expenses**
+![](/src/image/nav-expenses.gif) 
 
 ## Technologies
 [React](https://reactjs.org/) | [React Hooks](https://reactjs.org/docs/hooks-intro.html)| [Express.js](https://expressjs.com/) | [PostgreSQL](https://www.postgresql.org/) | [ChartJS](https://www.chartjs.org/)
